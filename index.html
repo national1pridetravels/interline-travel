@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interline Travel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="public-view">
+    <div class="surface"></div>
+    <header class="top-shell reveal">
+      <div class="brand">
+        <span class="brand-main">99designs</span>
+        <span class="brand-sub">by vista</span>
+      </div>
+      <div class="top-actions" aria-label="quick actions">
+        <button class="icon-btn" aria-label="Zoom in" type="button">⊕</button>
+        <button class="icon-btn" aria-label="Search" type="button">⌕</button>
+        <button class="icon-btn" aria-label="Adjustments" type="button">☷</button>
+        <a class="admin-link" href="./admin.html">Admin Portal</a>
+      </div>
+    </header>
+
+    <section class="quotes reveal" aria-label="Customer highlights">
+      <button class="nav-bubble" type="button" aria-label="Previous quote">‹</button>
+      <div class="quotes-window">
+        <div class="quotes-track" id="quotes-track"></div>
+      </div>
+    </section>
+
+    <main class="page">
+      <section class="intro reveal">
+        <span class="accent"></span>
+        <h1 id="hero-title">WELCOME TO INTERLINE TRAVEL</h1>
+        <p id="hero-subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+      </section>
+
+      <section class="feature-grid" id="feature-grid"></section>
+
+      <section class="catalog reveal" id="catalog">
+        <div class="catalog-head">
+          <span class="catalog-kicker">BOOK YOUR NEXT JOURNEY</span>
+          <h2>TRAVEL CATALOG</h2>
+          <p>Choose your preferred route and manage all packages from the admin portal.</p>
+        </div>
+
+        <form class="catalog-controls" id="catalog-controls" autocomplete="off">
+          <label>
+            <span>Search Trips</span>
+            <input type="search" id="catalog-search" placeholder="City, package, or tag" />
+          </label>
+          <label>
+            <span>Destination</span>
+            <select id="catalog-destination">
+              <option value="all">All destinations</option>
+            </select>
+          </label>
+          <label>
+            <span>Budget</span>
+            <select id="catalog-budget">
+              <option value="all">Any budget</option>
+              <option value="under_1000">Under $1,000</option>
+              <option value="1000_2000">$1,000 - $2,000</option>
+              <option value="over_2000">Above $2,000</option>
+            </select>
+          </label>
+          <label>
+            <span>Sort By</span>
+            <select id="catalog-sort">
+              <option value="recommended">Recommended</option>
+              <option value="price_low">Price: Low to High</option>
+              <option value="price_high">Price: High to Low</option>
+              <option value="rating">Top Rated</option>
+              <option value="departure">Earliest Departure</option>
+            </select>
+          </label>
+        </form>
+
+        <div class="catalog-grid" id="catalog-grid"></div>
+        <p class="catalog-empty" id="catalog-empty" hidden>No trips match your current filters.</p>
+      </section>
+    </main>
+
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>
