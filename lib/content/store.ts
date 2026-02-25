@@ -36,6 +36,7 @@ export type SiteConfigData = {
 }
 
 let bootstrapPromise: Promise<void> | null = null
+let databaseAvailable = true
 
 function asStringArray(value: unknown): string[] {
   if (!Array.isArray(value)) {
@@ -89,6 +90,28 @@ function mapPackage(entry: PackageEntry): PackageItem {
     idealFor: entry.idealFor || 'All travelers',
     includes: asStringArray(entry.includes),
   }
+}
+
+const fallbackPackages: PackageItem[] = defaultPackageSeeds.map((entry) => ({
+  slug: entry.slug,
+  title: entry.title,
+  duration: entry.duration,
+  priceFrom: entry.priceFrom,
+  image: entry.image,
+  season: entry.season,
+  tags: entry.tags,
+  summary: entry.summary,
+  idealFor: entry.idealFor,
+  includes: entry.includes,
+}))
+
+function markDatabaseUnavailable(error: unknown) {
+  if (!databaseAvailable) {
+    return
+  }
+
+  databaseAvailable = false
+  console.warn('Database unavailable. Falling back to static content.', error)
 }
 
 async function seedAdminUser() {
@@ -169,13 +192,21 @@ async function seedSiteConfig() {
 }
 
 export async function bootstrapAdminData() {
+  if (!databaseAvailable) {
+    return
+  }
+
   if (!bootstrapPromise) {
     bootstrapPromise = Promise.all([
       seedAdminUser(),
       seedDestinations(),
       seedPackages(),
       seedSiteConfig(),
-    ]).then(() => undefined)
+    ])
+      .then(() => undefined)
+      .catch((error) => {
+        markDatabaseUnavailable(error)
+      })
   }
 
   await bootstrapPromise
@@ -193,86 +224,158 @@ function mapSiteConfig(config: SiteConfig): SiteConfigData {
 }
 
 export async function getSiteConfig() {
-  await bootstrapAdminData()
-  const config = await prisma.siteConfig.findUnique({ where: { id: 1 } })
+  try {
+    await bootstrapAdminData()
+    if (!databaseAvailable) {
+      return defaultSiteConfig
+    }
 
-  if (!config) {
+    const config = await prisma.siteConfig.findUnique({ where: { id: 1 } })
+    if (!config) {
+      return defaultSiteConfig
+    }
+
+    return mapSiteConfig(config)
+  } catch (error) {
+    markDatabaseUnavailable(error)
     return defaultSiteConfig
   }
-
-  return mapSiteConfig(config)
 }
 
 export async function getDestinations() {
-  await bootstrapAdminData()
-  const rows = await prisma.destinationEntry.findMany({
-    orderBy: [{ isFeatured: 'desc' }, { name: 'asc' }],
-  })
-  return rows.map(mapDestination)
+  try {
+    await bootstrapAdminData()
+    if (!databaseAvailable) {
+      return fallbackDestinationList
+    }
+
+    const rows = await prisma.destinationEntry.findMany({
+      orderBy: [{ isFeatured: 'desc' }, { name: 'asc' }],
+    })
+
+    return rows.length ? rows.map(mapDestination) : fallbackDestinationList
+  } catch (error) {
+    markDatabaseUnavailable(error)
+    return fallbackDestinationList
+  }
 }
 
 export async function getDestinationBySlug(slug: string) {
-  await bootstrapAdminData()
-  const row = await prisma.destinationEntry.findUnique({
-    where: { slug },
-  })
+  const fallback = fallbackDestinationList.find((destination) => destination.slug === slug) || null
 
-  if (!row) {
-    return null
+  try {
+    await bootstrapAdminData()
+    if (!databaseAvailable) {
+      return fallback
+    }
+
+    const row = await prisma.destinationEntry.findUnique({
+      where: { slug },
+    })
+
+    if (!row) {
+      return fallback
+    }
+
+    return mapDestination(row)
+  } catch (error) {
+    markDatabaseUnavailable(error)
+    return fallback
   }
-
-  return mapDestination(row)
 }
 
 export async function getFeaturedDestinations() {
-  await bootstrapAdminData()
-  const rows = await prisma.destinationEntry.findMany({
-    where: { isFeatured: true },
-    orderBy: { name: 'asc' },
-  })
+  const fallback = fallbackDestinationList.filter((destination) =>
+    defaultFeaturedDestinationSlugs.includes(destination.slug)
+  )
 
-  if (rows.length === 0) {
-    return fallbackDestinationList.filter((destination) =>
-      defaultFeaturedDestinationSlugs.includes(destination.slug)
-    )
+  try {
+    await bootstrapAdminData()
+    if (!databaseAvailable) {
+      return fallback
+    }
+
+    const rows = await prisma.destinationEntry.findMany({
+      where: { isFeatured: true },
+      orderBy: { name: 'asc' },
+    })
+
+    if (rows.length === 0) {
+      return fallback
+    }
+
+    return rows.map(mapDestination)
+  } catch (error) {
+    markDatabaseUnavailable(error)
+    return fallback
   }
-
-  return rows.map(mapDestination)
 }
 
 export async function getHighlightDestinations() {
-  await bootstrapAdminData()
-  const rows = await prisma.destinationEntry.findMany({
-    where: { isHighlight: true },
-    orderBy: { name: 'asc' },
-  })
+  const fallback = fallbackDestinationList.filter((destination) =>
+    defaultHighlightDestinationSlugs.includes(destination.slug)
+  )
 
-  if (rows.length === 0) {
-    return fallbackDestinationList.filter((destination) =>
-      defaultHighlightDestinationSlugs.includes(destination.slug)
-    )
+  try {
+    await bootstrapAdminData()
+    if (!databaseAvailable) {
+      return fallback
+    }
+
+    const rows = await prisma.destinationEntry.findMany({
+      where: { isHighlight: true },
+      orderBy: { name: 'asc' },
+    })
+
+    if (rows.length === 0) {
+      return fallback
+    }
+
+    return rows.map(mapDestination)
+  } catch (error) {
+    markDatabaseUnavailable(error)
+    return fallback
   }
-
-  return rows.map(mapDestination)
 }
 
 export async function getPackages() {
-  await bootstrapAdminData()
-  const rows = await prisma.packageEntry.findMany({
-    orderBy: [{ season: 'asc' }, { title: 'asc' }],
-  })
-  return rows.map(mapPackage)
+  try {
+    await bootstrapAdminData()
+    if (!databaseAvailable) {
+      return fallbackPackages
+    }
+
+    const rows = await prisma.packageEntry.findMany({
+      orderBy: [{ season: 'asc' }, { title: 'asc' }],
+    })
+
+    return rows.length ? rows.map(mapPackage) : fallbackPackages
+  } catch (error) {
+    markDatabaseUnavailable(error)
+    return fallbackPackages
+  }
 }
 
 export async function getPackageBySlug(slug: string) {
-  await bootstrapAdminData()
-  const row = await prisma.packageEntry.findUnique({
-    where: { slug },
-  })
+  const fallback = fallbackPackages.find((entry) => entry.slug === slug) || null
 
-  if (!row) {
-    return null
+  try {
+    await bootstrapAdminData()
+    if (!databaseAvailable) {
+      return fallback
+    }
+
+    const row = await prisma.packageEntry.findUnique({
+      where: { slug },
+    })
+
+    if (!row) {
+      return fallback
+    }
+
+    return mapPackage(row)
+  } catch (error) {
+    markDatabaseUnavailable(error)
+    return fallback
   }
-
-  return mapPackage(row)
 }
