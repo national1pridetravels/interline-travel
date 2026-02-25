@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interline Admin Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="admin-view">
+    <div class="surface"></div>
+    <header class="admin-top reveal">
+      <a class="back-link" href="./index.html">← Back to Website</a>
+      <h1>Interline Admin Portal</h1>
+      <p>Full access dashboard for homepage content and travel catalog management.</p>
+    </header>
+
+    <main class="admin-page">
+      <section class="admin-auth reveal" id="auth-panel">
+        <div class="auth-box">
+          <h2>Admin Authentication</h2>
+          <p id="backend-mode">Connect Supabase in <code>config.js</code> to enable production backend mode.</p>
+          <form id="auth-form" class="admin-form auth-form">
+            <label>
+              <span>Email</span>
+              <input id="auth-email" type="email" placeholder="admin@interline.com" autocomplete="email" />
+            </label>
+            <label>
+              <span>Password</span>
+              <input
+                id="auth-password"
+                type="password"
+                placeholder="Minimum 6 characters"
+                autocomplete="current-password"
+              />
+            </label>
+            <div class="form-actions">
+              <button type="button" id="auth-signin">Sign In</button>
+              <button type="button" class="btn-muted" id="auth-signup">Sign Up</button>
+              <button type="button" class="btn-muted" id="auth-signout">Sign Out</button>
+            </div>
+          </form>
+          <p class="auth-status" id="auth-status"></p>
+        </div>
+      </section>
+
+      <section id="admin-workspace" hidden>
+        <section class="admin-stats reveal" aria-label="Portal metrics">
+          <article class="admin-stat">
+            <h2>Total Trips</h2>
+            <strong id="stat-trips">0</strong>
+          </article>
+          <article class="admin-stat">
+            <h2>Testimonials</h2>
+            <strong id="stat-testimonials">0</strong>
+          </article>
+          <article class="admin-stat">
+            <h2>Feature Cards</h2>
+            <strong id="stat-features">0</strong>
+          </article>
+        </section>
+
+        <section class="admin-grid">
+          <article class="admin-card reveal">
+            <h2>Hero Content</h2>
+            <form id="hero-form" class="admin-form">
+              <label>
+                <span>Heading</span>
+                <input id="hero-title-input" name="title" required />
+              </label>
+              <label>
+                <span>Subheading</span>
+                <input id="hero-subtitle-input" name="subtitle" required />
+              </label>
+              <button type="submit">Save Hero Content</button>
+            </form>
+          </article>
+
+          <article class="admin-card reveal">
+            <h2>Testimonials</h2>
+            <form id="testimonial-form" class="admin-form">
+              <input type="hidden" id="testimonial-id" />
+              <label>
+                <span>Quote</span>
+                <textarea id="testimonial-quote" required></textarea>
+              </label>
+              <label>
+                <span>Name</span>
+                <input id="testimonial-name" required />
+              </label>
+              <label>
+                <span>Handle</span>
+                <input id="testimonial-handle" required />
+              </label>
+              <label>
+                <span>Avatar Tone</span>
+                <select id="testimonial-tone">
+                  <option value="tone-a">Blue</option>
+                  <option value="tone-b">Orange</option>
+                  <option value="tone-c">Green</option>
+                </select>
+              </label>
+              <div class="form-actions">
+                <button type="submit">Save Testimonial</button>
+                <button type="button" class="btn-muted" id="testimonial-clear">Clear</button>
+              </div>
+            </form>
+            <div id="testimonial-list" class="entity-list"></div>
+          </article>
+
+          <article class="admin-card reveal">
+            <h2>Feature Cards</h2>
+            <form id="feature-form" class="admin-form">
+              <input type="hidden" id="feature-id" />
+              <label>
+                <span>Title</span>
+                <input id="feature-title" required />
+              </label>
+              <label>
+                <span>Description</span>
+                <textarea id="feature-description" required></textarea>
+              </label>
+              <label>
+                <span>Icon</span>
+                <select id="feature-icon"></select>
+              </label>
+              <div class="form-actions">
+                <button type="submit">Save Feature</button>
+                <button type="button" class="btn-muted" id="feature-clear">Clear</button>
+              </div>
+            </form>
+            <div id="feature-list" class="entity-list"></div>
+          </article>
+
+          <article class="admin-card admin-full reveal">
+            <h2>Travel Catalog Manager</h2>
+            <form id="trip-form" class="admin-form trip-form">
+              <input type="hidden" id="trip-id" />
+              <label>
+                <span>Trip Title</span>
+                <input id="trip-title" required />
+              </label>
+              <label>
+                <span>Destination</span>
+                <input id="trip-destination" required />
+              </label>
+              <label>
+                <span>Duration</span>
+                <input id="trip-duration" placeholder="5 Days / 4 Nights" required />
+              </label>
+              <label>
+                <span>Price (USD)</span>
+                <input id="trip-price" type="number" min="0" step="1" required />
+              </label>
+              <label>
+                <span>Rating (0-5)</span>
+                <input id="trip-rating" type="number" min="0" max="5" step="0.1" required />
+              </label>
+              <label>
+                <span>Seats Left</span>
+                <input id="trip-seats" type="number" min="0" step="1" required />
+              </label>
+              <label>
+                <span>Departure Date</span>
+                <input id="trip-departure" type="date" required />
+              </label>
+              <label>
+                <span>Theme</span>
+                <select id="trip-theme"></select>
+              </label>
+              <label class="span-2">
+                <span>Summary</span>
+                <textarea id="trip-summary" required></textarea>
+              </label>
+              <label class="span-2">
+                <span>Tags (comma separated)</span>
+                <input id="trip-tags" placeholder="Beach, Relax, Family" />
+              </label>
+              <label class="inline-check">
+                <input id="trip-featured" type="checkbox" />
+                <span>Mark as featured trip</span>
+              </label>
+              <div class="form-actions span-2">
+                <button type="submit">Save Trip</button>
+                <button type="button" class="btn-muted" id="trip-clear">Clear</button>
+              </div>
+            </form>
+            <div id="trip-list" class="trip-list"></div>
+          </article>
+
+          <article class="admin-card admin-full reveal">
+            <h2>Data Tools</h2>
+            <div class="form-actions">
+              <button type="button" id="export-data">Export JSON</button>
+              <button type="button" class="btn-muted" id="import-data">Import JSON</button>
+              <button type="button" class="btn-danger" id="reset-data">Reset Defaults</button>
+            </div>
+            <label class="admin-form">
+              <span>State JSON</span>
+              <textarea id="data-json" class="json-area" placeholder="Exported JSON appears here..."></textarea>
+            </label>
+          </article>
+        </section>
+
+        <p class="admin-message" id="admin-message" role="status"></p>
+      </section>
+    </main>
+
+    <script type="module" src="./admin.js"></script>
+  </body>
+</html>
