@@ -1,0 +1,121 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+//
+// ==============================
+// PACKAGE MODEL
+// ==============================
+//
+
+model Package {
+  id          String   @id @default(cuid())
+  title       String
+  duration    String
+  price       Int
+  image       String?
+  slug        String   @unique
+
+  createdAt   DateTime @default(now())
+}
+
+//
+// ==============================
+// BOOKING MODEL
+// ==============================
+//
+
+model Booking {
+  id        String   @id @default(cuid())
+
+  name      String
+  email     String
+  phone     String
+
+  package   String
+  travelers Int
+
+  checkIn   DateTime
+  checkOut  DateTime?
+
+  createdAt DateTime @default(now())
+}
+
+model AdminUser {
+  id           String         @id @default(cuid())
+  email        String         @unique
+  passwordHash String
+  role         String         @default("SUPER_ADMIN")
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  sessions     AdminSession[]
+}
+
+model AdminSession {
+  id        String    @id @default(cuid())
+  token     String    @unique
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime  @default(now())
+  user      AdminUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model DestinationEntry {
+  id               String   @id @default(cuid())
+  slug             String   @unique
+  name             String
+  season           String
+  tagline          String
+  shortDescription String
+  description      String
+  bestSeason       String
+  idealFor         String
+  altitude         String
+  travelTime       String
+  heroImage        String
+  category         String
+  highlights       Json
+  attractions      Json
+  isFeatured       Boolean  @default(false)
+  isHighlight      Boolean  @default(false)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model PackageEntry {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  title     String
+  duration  String
+  priceFrom String
+  image     String
+  season    String?
+  tags      Json
+  summary   String?
+  idealFor  String?
+  includes  Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SiteConfig {
+  id           Int      @id
+  brandName    String   @default("Nation Pride Travels")
+  brandTagline String   @default("Time to travel with us")
+  phone        String   @default("+91 99064 69903")
+  heroEyebrow  String   @default("KASHMIR CURATED JOURNEYS")
+  heroTitle    String   @default("Discover the Paradise on Earth")
+  heroSubtitle String   @default("Slow mornings on Dal Lake, alpine adventures in Gulmarg, and handcrafted itineraries that feel premium from day one.")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}

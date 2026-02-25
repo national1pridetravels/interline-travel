@@ -1,0 +1,22 @@
+Destination image sources (Wikimedia Commons):
+
+- srinagar: https://commons.wikimedia.org/wiki/File:Srinagar_pano.jpg
+- gulmarg: https://commons.wikimedia.org/wiki/File:Gulmarg_-_Jannat_on_Earth.jpg
+- pahalgam: https://commons.wikimedia.org/wiki/File:Pahalgam_Valley.jpg
+- sonmarg: https://commons.wikimedia.org/wiki/File:Sonmarg_-_Paradise.jpg
+- dal-lake: https://commons.wikimedia.org/wiki/File:Dal_Lake,_Srinagar,_Jammu_and_Kashmir.jpg
+- gurez: https://commons.wikimedia.org/wiki/File:Gurez_Valley_04.jpg
+- doodhpathri: https://commons.wikimedia.org/wiki/File:A_bench_with_scenic_view_Doodhpathri_southwest_Jammu_Kashmir_India.jpg
+- vaishno-devi: https://commons.wikimedia.org/wiki/File:Vaishno_Devi_Bhavan.jpg
+- amarnath: https://commons.wikimedia.org/wiki/File:Shri_Amarnath_Ji_Holy_Cave(GUFA).jpg
+- patnitop: https://commons.wikimedia.org/wiki/File:Patnitop_hill.jpg
+- jammu: https://commons.wikimedia.org/wiki/File:Jammu_city.jpg
+- katra: https://commons.wikimedia.org/wiki/File:Katra,_Jammu_and_Kashmir.jpg
+- yusmarg: https://commons.wikimedia.org/wiki/File:Yusmarg,_beautiful_valley_in_Kashmir.jpg
+- aru-valley: https://commons.wikimedia.org/wiki/File:Aru_Valley_in_Kashmir.jpg
+- betaab-valley: https://commons.wikimedia.org/wiki/File:Betaab_Valley,_Pehalgam,_Kashmir.jpg
+- tulip-garden: https://commons.wikimedia.org/wiki/File:Indira_Gandhi_Memorial_Tulip_Garden,_Srinagar.jpg
+- badamwari: https://commons.wikimedia.org/wiki/File:Badamwari_Garden_Srinagar.jpg
+- verinag: https://commons.wikimedia.org/wiki/File:A_view_of_Verinag_(derivative).jpg
+- kokernag: https://commons.wikimedia.org/wiki/File:Kokernag_garden_stream.jpg
+- aharbal: https://commons.wikimedia.org/wiki/File:Aharbal_Waterfall,_Kashmir.jpg

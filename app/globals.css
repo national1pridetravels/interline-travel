@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-soft: #eff5f4;
+  --bg-cream: #f9f7ee;
+  --ink: #10243a;
+  --ink-muted: #49607a;
+  --brand: #0f8a6a;
+  --brand-deep: #0f3e6b;
+  --font-sans: 'Manrope', 'Avenir Next', 'Nunito Sans', 'Segoe UI', sans-serif;
+  --font-display: 'Cormorant Garamond', 'Iowan Old Style', 'Palatino Linotype', serif;
+}
+
+@layer base {
+  * {
+    @apply border-slate-200;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-height: 100vh;
+    color: var(--ink);
+    font-family: var(--font-sans), system-ui, -apple-system, Segoe UI, sans-serif;
+    background: linear-gradient(180deg, #eef4f7 0%, #f6f7ef 45%, #eef7f4 100%);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display), Georgia, serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 12px rgba(16, 185, 129, 0);
+  }
+}
+
+@layer components {
+  .section-wrap {
+    @apply max-w-7xl mx-auto px-6;
+  }
+
+  .glass-panel {
+    @apply rounded-3xl border border-white/60 bg-white/70 backdrop-blur-xl shadow-[0_18px_55px_rgba(15,35,58,0.12)];
+  }
+
+  .headline-main {
+    @apply text-4xl md:text-5xl text-slate-900 leading-tight;
+  }
+
+  .chip-glow {
+    animation: pulse-glow 2.4s ease-in-out infinite;
+  }
+
+  .float-soft {
+    animation: float-y 6s ease-in-out infinite;
+  }
+
+  .float-soft-delay {
+    animation: float-y 6.8s ease-in-out 0.7s infinite;
+  }
+}
