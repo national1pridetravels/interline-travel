@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import prisma from '@/lib/db/prisma'
 import { requireAuthenticatedAdmin } from '@/lib/admin/auth'
 import { defaultSiteConfig } from '@/lib/content/defaults'
-import { bootstrapAdminData } from '@/lib/content/store'
+import { bootstrapAdminData, invalidateContentCache } from '@/lib/content/store'
 
 export const dynamic = 'force-dynamic'
 
@@ -91,6 +91,8 @@ export async function PUT(request: Request) {
         heroSubtitle,
       },
     })
+
+    invalidateContentCache('site-config')
 
     return NextResponse.json({
       success: true,

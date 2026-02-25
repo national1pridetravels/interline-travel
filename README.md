@@ -1,35 +1,56 @@
-# Interline Travel Website
+# National Pride Travels (Next.js)
 
-Public website + admin portal with production-ready backend using Supabase (DB + Auth + RLS).
+Production website for Kashmir travel packages with:
+- Public website pages (`/`, `/destinations`, `/packages`, `/about`, `/contact`, `/blog`)
+- Admin panel (`/admin`) for managing site config, destinations, and packages
+- Lead forms (`/api/contact`, `/api/planner`, `/api/booking`, `/api/newsletter`)
+- WhatsApp chatbot API (`/api/chatbot`) powered by live destination/package data
 
-## Project Pages
-- `/index.html` public website
-- `/admin.html` admin portal
+## Tech Stack
+- Next.js 14 (App Router)
+- TypeScript
+- Tailwind CSS
+- Prisma + SQLite
 
-## Production Setup (Supabase)
-1. Create a Supabase project.
-2. Open SQL Editor and run `/supabase/schema.sql`.
-3. Copy `/config.example.js` to `/config.js` and set:
-   - `SUPABASE_URL`
-   - `SUPABASE_ANON_KEY`
-4. In Supabase Auth settings:
-   - Enable Email/Password auth provider.
-   - Configure your site URL and redirect URLs (your Vercel domain).
+## Local Development
+1. Install dependencies:
+```bash
+npm install
+```
+2. Configure environment:
+```bash
+cp .env .env.local
+```
+3. Generate Prisma client:
+```bash
+npm run prisma:generate
+```
+4. Run development server:
+```bash
+npm run dev
+```
 
-## First Admin Bootstrap
-1. Open `/admin.html`.
-2. Sign up (or sign in) with your email/password.
-3. If `admin_users` is empty, the first logged-in user is auto-bootstrapped as admin.
-4. After that, only admins can modify data.
+## Environment Variables
+- `DATABASE_URL` (Prisma SQLite/Postgres connection)
+- `ADMIN_EMAIL` (optional, default fallback exists)
+- `ADMIN_PASSWORD` (optional, default fallback exists)
+- `NEXT_PUBLIC_SITE_URL` (for canonical/SEO URLs)
+- `RESEND_API_KEY` (required for lead email delivery)
+- `RESEND_FROM_EMAIL` (sender email/domain for Resend)
+- `CONTACT_RECEIVER_EMAILS` (comma-separated lead inbox recipients)
+- `WHATSAPP_VERIFY_TOKEN` (optional, webhook verification)
+- `WHATSAPP_ACCESS_TOKEN` (optional, webhook send)
+- `WHATSAPP_PHONE_NUMBER_ID` (optional, webhook send)
 
-## Deploy on Vercel
-1. Push this repo to GitHub.
-2. Import repo in Vercel.
-3. Framework preset: `Other`.
-4. No build command needed (static deployment).
-5. Deploy.
+## Build and Run
+```bash
+npm run build
+npm run start
+```
 
-## Notes
-- Public content is read from Supabase.
-- Admin writes are protected by Row Level Security policies (`public.is_admin()`).
-- If `config.js` is empty, app falls back to local browser storage for development only.
+## Deploy
+Deploy on Vercel as a standard Next.js project.
+
+Notes:
+- Forms submit without email if `RESEND_API_KEY` is missing.
+- Admin auth/session is handled by the `/api/admin/auth/*` routes.

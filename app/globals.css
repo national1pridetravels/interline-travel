@@ -11,6 +11,7 @@
   --brand-deep: #0f3e6b;
   --font-sans: 'Manrope', 'Avenir Next', 'Nunito Sans', 'Segoe UI', sans-serif;
   --font-display: 'Cormorant Garamond', 'Iowan Old Style', 'Palatino Linotype', serif;
+  --font-brand: 'Saira Stencil One', 'Impact', 'Arial Black', sans-serif;
 }
 
 @layer base {
@@ -86,5 +87,26 @@
 
   .float-soft-delay {
     animation: float-y 6.8s ease-in-out 0.7s infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html,
+  body {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .chip-glow,
+  .float-soft,
+  .float-soft-delay {
+    animation: none !important;
   }
 }

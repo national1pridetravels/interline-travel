@@ -1,45 +1,14 @@
-'use client'
-
-import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { featuredDestinations, type Destination } from '@/lib/destinations'
 
-export default function PopularDestinations() {
-  const [items, setItems] = useState<Destination[]>(featuredDestinations)
+type PopularDestinationsProps = {
+  items?: Destination[]
+}
 
-  useEffect(() => {
-    let isMounted = true
-
-    async function loadFeatured() {
-      try {
-        const response = await fetch('/api/content/destinations', {
-          cache: 'no-store',
-        })
-
-        if (!response.ok) {
-          return
-        }
-
-        const payload = (await response.json()) as {
-          success: boolean
-          featured?: Destination[]
-        }
-
-        if (isMounted && payload.success && Array.isArray(payload.featured)) {
-          setItems(payload.featured)
-        }
-      } catch (error) {
-        console.error('Failed to load featured destinations', error)
-      }
-    }
-
-    void loadFeatured()
-
-    return () => {
-      isMounted = false
-    }
-  }, [])
+export default function PopularDestinations({
+  items = featuredDestinations,
+}: PopularDestinationsProps) {
 
   return (
     <section className="py-20">

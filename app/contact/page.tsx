@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { FiExternalLink, FiMail, FiMapPin, FiMessageCircle, FiPhoneCall } from 'react-icons/fi'
 import { FaFacebookF, FaGoogle, FaInstagram, FaWhatsapp } from 'react-icons/fa'
+import ContactInquiryForm from '@/components/forms/ContactInquiryForm'
 
 export const metadata: Metadata = {
   title: 'Contact Kashmir Tour Experts',
@@ -37,93 +38,92 @@ const socialLinks = [
 
 export default function ContactPage() {
   return (
-    <main className="min-h-screen bg-gradient-to-b from-[#eef5f8] via-[#f8f6ee] to-[#edf6f2] py-24">
+    <main className="min-h-screen bg-[radial-gradient(circle_at_top,#133f61_0%,#0a2944_42%,#081d31_100%)] py-24 text-white">
       <div className="mx-auto max-w-6xl px-6">
         <header className="mb-12 text-center">
-          <h1 className="mb-4 text-4xl font-semibold text-slate-900 md:text-5xl">Contact National Pride Travels</h1>
-          <p className="mx-auto max-w-3xl text-lg leading-relaxed text-slate-700">
+          <h1 className="mb-4 text-4xl font-semibold text-white md:text-5xl">
+            Contact National Pride Travels
+          </h1>
+          <p className="mx-auto max-w-3xl text-lg leading-relaxed text-slate-200/90">
             Reach us anytime for Kashmir tour planning, custom itineraries, group bookings, and
             direct support before and during travel.
           </p>
         </header>
 
         <div className="grid gap-8 lg:grid-cols-2">
-          <section className="rounded-3xl border border-white/70 bg-white/85 p-8 shadow-[0_18px_48px_rgba(15,35,58,0.14)]">
-            <h2 className="mb-6 text-2xl font-semibold text-slate-900">24/7 Contact Service</h2>
+          <section className="rounded-3xl border border-white/25 bg-white/10 p-8 shadow-[0_24px_52px_rgba(2,12,26,0.42)] backdrop-blur-xl">
+            <h2 className="mb-6 text-2xl font-semibold text-white">24/7 Contact Service</h2>
 
-            <div className="space-y-5 text-slate-700">
+            <div className="space-y-5 text-slate-100">
               <div className="flex items-start gap-3">
-                <FiPhoneCall className="mt-1 text-emerald-600" size={18} />
+                <FiPhoneCall className="mt-1 text-emerald-300" size={18} />
                 <div>
-                  <p className="font-semibold text-slate-900">Phone</p>
-                  <a href="tel:+919906469903" className="hover:text-emerald-700">
+                  <p className="font-semibold text-white">Phone</p>
+                  <a href="tel:+919906469903" className="hover:text-emerald-200">
                     +91-9906469903
                   </a>
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
-                <FiMessageCircle className="mt-1 text-emerald-600" size={18} />
+                <FiMessageCircle className="mt-1 text-emerald-300" size={18} />
                 <div>
-                  <p className="font-semibold text-slate-900">WhatsApp Live Bot</p>
+                  <p className="font-semibold text-white">WhatsApp Chatbot</p>
                   <a
-                    href="https://wa.me/919906469903?text=Hello%20National%20Pride%20Travels%2C%20I%20want%20to%20plan%20a%20Kashmir%20tour."
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hover:text-emerald-700"
+                    href="#whatsapp-chat"
+                    className="hover:text-emerald-200"
                   >
-                    Chat on WhatsApp
+                    Start Live Chat
                   </a>
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
-                <FiMail className="mt-1 text-emerald-600" size={18} />
+                <FiMail className="mt-1 text-emerald-300" size={18} />
                 <div>
-                  <p className="font-semibold text-slate-900">Email</p>
-                  <a href="mailto:info@nationalpridetravels.com" className="hover:text-emerald-700">
+                  <p className="font-semibold text-white">Email</p>
+                  <a href="mailto:info@nationalpridetravels.com" className="hover:text-emerald-200">
                     info@nationalpridetravels.com
                   </a>
                   <br />
-                  <a href="mailto:nationalpridetravels@gmail.com" className="hover:text-emerald-700">
+                  <a href="mailto:nationalpridetravels@gmail.com" className="hover:text-emerald-200">
                     nationalpridetravels@gmail.com
                   </a>
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
-                <FiMapPin className="mt-1 text-emerald-600" size={18} />
+                <FiMapPin className="mt-1 text-emerald-300" size={18} />
                 <div>
-                  <p className="font-semibold text-slate-900">Office Address</p>
+                  <p className="font-semibold text-white">Office Address</p>
                   <p>MACHOWA BAGHI MEHTAB</p>
                   <p>SRINAGAR, JAMMU AND KASHMIR, INDIA - 190015</p>
                   <a
                     href="https://maps.google.com/?q=MACHOWA+BAGHI+MEHTAB+SRINAGAR+JAMMU+AND+KASHMIR+INDIA+190015"
                     target="_blank"
                     rel="noreferrer"
-                    className="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-slate-900 hover:text-emerald-700"
+                    className="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-cyan-100 hover:text-white"
                   >
                     Open Location <FiExternalLink size={13} />
                   </a>
                 </div>
               </div>
             </div>
-          </section>
 
-          <section className="rounded-3xl border border-slate-200 bg-white p-8 shadow-[0_10px_30px_rgba(15,35,58,0.12)]">
-            <h2 className="mb-5 text-2xl font-semibold text-slate-900">Social and Profile Links</h2>
-            <p className="mb-6 text-slate-700">
-              Follow us for package updates, guest stories, and destination content from Kashmir.
-            </p>
+            <div className="mt-7 rounded-2xl border border-white/20 bg-[#051427]/70 p-5 text-sm text-slate-200">
+              <p className="font-semibold text-white">Registration and Tax Details</p>
+              <p className="mt-2">Department of Tourism Reg No: JKAE00005259</p>
+              <p>GSTN: 01AOZPH8135A1Z4A</p>
+            </div>
 
-            <div className="space-y-3">
+            <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
               {socialLinks.map(({ label, href, icon: Icon }) => (
                 <a
                   key={label}
                   href={href}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center justify-between rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-900 transition hover:border-emerald-300 hover:bg-emerald-50"
+                  className="flex items-center justify-between rounded-2xl border border-white/25 bg-white/10 px-4 py-3 text-sm font-semibold text-white transition hover:bg-white/20"
                 >
                   <span className="inline-flex items-center gap-2">
                     <Icon />
@@ -134,24 +134,25 @@ export default function ContactPage() {
               ))}
 
               <a
-                href="https://wa.me/919906469903?text=Hello%20National%20Pride%20Travels%2C%20I%20want%20to%20plan%20a%20Kashmir%20tour."
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center justify-between rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-800 transition hover:bg-emerald-100"
+                href="#whatsapp-chat"
+                className="flex items-center justify-between rounded-2xl border border-emerald-300/50 bg-emerald-500/20 px-4 py-3 text-sm font-semibold text-emerald-100 transition hover:bg-emerald-500/30 sm:col-span-2"
               >
                 <span className="inline-flex items-center gap-2">
                   <FaWhatsapp />
-                  WhatsApp Live Bot
+                  WhatsApp Chatbot
                 </span>
                 <FiExternalLink />
               </a>
             </div>
+          </section>
 
-            <div className="mt-7 rounded-2xl bg-slate-900 p-5 text-sm text-slate-200">
-              <p className="font-semibold text-white">Registration and Tax Details</p>
-              <p className="mt-2">Department of Tourism Reg No: JKAE00005259</p>
-              <p>GSTN: 01AOZPH8135A1Z4A</p>
-            </div>
+          <section className="rounded-3xl border border-white/25 bg-white/10 p-8 shadow-[0_24px_52px_rgba(2,12,26,0.42)] backdrop-blur-xl">
+            <h2 className="mb-3 text-2xl font-semibold text-white">Send Your Inquiry</h2>
+            <p className="mb-5 text-slate-200/90">
+              This form is connected to our lead inbox at info@nationalpridetravels.com and
+              nationalpridetravels@gmail.com.
+            </p>
+            <ContactInquiryForm />
           </section>
         </div>
       </div>

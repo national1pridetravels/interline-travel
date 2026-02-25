@@ -1,8 +1,10 @@
 import type { Metadata } from 'next'
-import { Cormorant_Garamond, Manrope } from 'next/font/google'
+import { Cormorant_Garamond, Manrope, Saira_Stencil_One } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/layout/Navbar'
+import type { NavbarDestination } from '@/components/layout/Navbar'
 import WhatsAppFloat from '@/components/layout/WhatsAppFloat'
+import { getDestinations, getSiteConfig } from '@/lib/content/store'
 import {
   defaultDescription,
   defaultKeywords,
@@ -23,6 +25,13 @@ const cormorant = Cormorant_Garamond({
   variable: '--font-display',
   display: 'swap',
   weight: ['500', '600', '700'],
+})
+
+const brandFont = Saira_Stencil_One({
+  subsets: ['latin'],
+  variable: '--font-brand',
+  display: 'swap',
+  weight: ['400'],
 })
 
 export const metadata: Metadata = {
@@ -80,20 +89,37 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const [siteConfig, destinations] = await Promise.all([getSiteConfig(), getDestinations()])
+  const navbarDestinations: NavbarDestination[] = destinations.map((destination) => ({
+    slug: destination.slug,
+    name: destination.name,
+    category: destination.category,
+    tagline: destination.tagline,
+    bestSeason: destination.bestSeason,
+    heroImage: destination.heroImage,
+  }))
+
   return (
     <html lang="en">
-      <body className={`${manrope.variable} ${cormorant.variable} antialiased`}>
+      <body className={`${manrope.variable} ${cormorant.variable} ${brandFont.variable} antialiased`}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
-        <Navbar />
-        <div className="pt-[98px] lg:pt-[166px]">{children}</div>
+        <Navbar
+          initialDestinations={navbarDestinations}
+          initialSiteConfig={{
+            brandName: siteConfig.brandName,
+            brandTagline: siteConfig.brandTagline,
+            phone: siteConfig.phone,
+          }}
+        />
+        <div className="pt-[108px] lg:pt-[176px]">{children}</div>
         <WhatsAppFloat />
       </body>
     </html>

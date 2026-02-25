@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import HeroSection from '@/components/sections/HeroSection'
+import HeroSection, { type HeroConfig } from '@/components/sections/HeroSection'
 import SearchBooking from '@/components/sections/SearchBooking'
 import TrustBar from '@/components/sections/TrustBar'
 import PopularDestinations from '@/components/sections/PopularDestinations'
@@ -12,6 +12,13 @@ import KashmirFaq from '@/components/sections/KashmirFaq'
 import Newsletter from '@/components/sections/Newsletter'
 import Footer from '@/components/sections/Footer'
 import { kashmirFaqs } from '@/lib/faq'
+import {
+  getDestinations,
+  getFeaturedDestinations,
+  getHighlightDestinations,
+  getPackages,
+  getSiteConfig,
+} from '@/lib/content/store'
 import { absoluteUrl, siteName, siteUrl } from '@/lib/seo'
 
 export const metadata: Metadata = {
@@ -30,7 +37,24 @@ export const metadata: Metadata = {
   },
 }
 
-export default function HomePage() {
+export const revalidate = 300
+
+export default async function HomePage() {
+  const [siteConfig, featuredDestinations, highlightDestinations, destinations, packages] =
+    await Promise.all([
+      getSiteConfig(),
+      getFeaturedDestinations(),
+      getHighlightDestinations(),
+      getDestinations(),
+      getPackages(),
+    ])
+
+  const heroConfig: HeroConfig = {
+    heroEyebrow: siteConfig.heroEyebrow,
+    heroTitle: siteConfig.heroTitle,
+    heroSubtitle: siteConfig.heroSubtitle,
+  }
+
   const websiteJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
@@ -70,24 +94,24 @@ export default function HomePage() {
 
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute inset-0 bg-[linear-gradient(180deg,#e6f3f7_0%,#f7f8ef_42%,#eaf6f2_100%)]" />
-          <div className="float-soft absolute -top-36 left-[-7rem] h-[420px] w-[420px] rounded-full bg-cyan-200/45 blur-[110px]" />
-          <div className="float-soft-delay absolute top-[34%] right-[-6rem] h-[390px] w-[390px] rounded-full bg-emerald-200/45 blur-[110px]" />
-          <div className="float-soft absolute bottom-20 left-[14%] h-[300px] w-[300px] rounded-full bg-sky-300/35 blur-[90px]" />
-          <div className="float-soft-delay absolute bottom-0 right-[20%] h-[270px] w-[270px] rounded-full bg-lime-200/40 blur-[95px]" />
+          <div className="float-soft absolute -top-36 left-[-7rem] hidden h-[420px] w-[420px] rounded-full bg-cyan-200/45 blur-[110px] md:block" />
+          <div className="float-soft-delay absolute top-[34%] right-[-6rem] hidden h-[390px] w-[390px] rounded-full bg-emerald-200/45 blur-[110px] md:block" />
+          <div className="float-soft absolute bottom-20 left-[14%] h-[220px] w-[220px] rounded-full bg-sky-300/30 blur-[72px] md:h-[300px] md:w-[300px] md:blur-[90px]" />
+          <div className="float-soft-delay absolute bottom-0 right-[20%] h-[200px] w-[200px] rounded-full bg-lime-200/35 blur-[68px] md:h-[270px] md:w-[270px] md:blur-[95px]" />
         </div>
 
         <div className="relative z-10">
-          <HeroSection />
-          <section className="relative z-20 -mt-16 px-6 pb-6 lg:-mt-20">
+          <HeroSection heroConfig={heroConfig} />
+          <section className="relative z-20 mt-4 px-6 pb-6">
             <div className="mx-auto max-w-7xl">
-              <SearchBooking />
+              <SearchBooking destinations={destinations} />
             </div>
           </section>
           <TrustBar />
           <div className="relative space-y-2 pb-10">
-            <PopularDestinations />
-            <KashmirHighlights />
-            <Packages />
+            <PopularDestinations items={featuredDestinations} />
+            <KashmirHighlights highlights={highlightDestinations} />
+            <Packages packages={packages} />
             <AdventureActivities />
             <WhyChooseUs />
             <KashmirFaq />

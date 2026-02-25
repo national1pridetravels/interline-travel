@@ -1,6 +1,3 @@
-'use client'
-
-import { useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FiMapPin } from 'react-icons/fi'
@@ -54,43 +51,12 @@ function inferLocationFromTitle(title: string) {
   return 'Kashmir'
 }
 
-export default function Packages() {
-  const [packages, setPackages] = useState<PackageItem[]>(fallbackPackages)
+type PackagesProps = {
+  packages?: PackageItem[]
+}
 
-  useEffect(() => {
-    let isMounted = true
-
-    async function loadPackages() {
-      try {
-        const response = await fetch('/api/content/packages', {
-          cache: 'no-store',
-        })
-
-        if (!response.ok) {
-          return
-        }
-
-        const payload = (await response.json()) as {
-          success: boolean
-          packages?: PackageItem[]
-        }
-
-        if (isMounted && payload.success && Array.isArray(payload.packages)) {
-          setPackages(payload.packages)
-        }
-      } catch (error) {
-        console.error('Failed to load packages', error)
-      }
-    }
-
-    void loadPackages()
-
-    return () => {
-      isMounted = false
-    }
-  }, [])
-
-  const topPackages = useMemo(() => packages.slice(0, 4), [packages])
+export default function Packages({ packages = fallbackPackages }: PackagesProps) {
+  const topPackages = packages.slice(0, 4)
 
   return (
     <section className="py-20">
@@ -118,9 +84,6 @@ export default function Packages() {
                   className="object-cover"
                 />
 
-                <div className="absolute top-4 left-4 rounded-full bg-white/95 px-4 py-2 text-sm font-bold text-slate-900 shadow">
-                  {pkg.duration}
-                </div>
                 <div className="absolute right-4 top-4 rounded-full bg-black/50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-white backdrop-blur-sm">
                   Kashmir
                 </div>
@@ -135,11 +98,6 @@ export default function Packages() {
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <div>
-                    <p className="mb-1 text-xs text-slate-500">Starting From</p>
-                    <p className="text-2xl font-semibold text-slate-900">{pkg.priceFrom}</p>
-                  </div>
-
                   <Link
                     href={`/packages/${pkg.slug}`}
                     className="rounded-full bg-gradient-to-r from-emerald-500 to-teal-600 px-5 py-3 text-sm font-semibold text-white transition hover:from-emerald-600 hover:to-teal-700"

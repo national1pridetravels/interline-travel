@@ -1,10 +1,7 @@
-'use client'
-
-import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import SmartVideoBackground from '@/components/ui/SmartVideoBackground'
 
-type HeroConfig = {
+export type HeroConfig = {
   heroEyebrow: string
   heroTitle: string
   heroSubtitle: string
@@ -17,48 +14,14 @@ const defaultHeroConfig: HeroConfig = {
     'Slow mornings on Dal Lake, alpine adventures in Gulmarg, and handcrafted itineraries that feel premium from day one.',
 }
 
-export default function HeroSection() {
-  const [heroConfig, setHeroConfig] = useState<HeroConfig>(defaultHeroConfig)
+type HeroSectionProps = {
+  heroConfig?: HeroConfig
+}
 
-  useEffect(() => {
-    let isMounted = true
-
-    async function loadHeroConfig() {
-      try {
-        const response = await fetch('/api/content/config', {
-          cache: 'no-store',
-        })
-
-        if (!response.ok) {
-          return
-        }
-
-        const payload = (await response.json()) as {
-          success: boolean
-          config?: HeroConfig
-        }
-
-        if (isMounted && payload.success && payload.config) {
-          setHeroConfig({
-            heroEyebrow: payload.config.heroEyebrow,
-            heroTitle: payload.config.heroTitle,
-            heroSubtitle: payload.config.heroSubtitle,
-          })
-        }
-      } catch (error) {
-        console.error('Failed to load hero config', error)
-      }
-    }
-
-    void loadHeroConfig()
-
-    return () => {
-      isMounted = false
-    }
-  }, [])
+export default function HeroSection({ heroConfig = defaultHeroConfig }: HeroSectionProps) {
 
   return (
-    <section className="relative min-h-[calc(100svh-88px)] w-full overflow-hidden lg:min-h-[calc(100svh-146px)]">
+    <section className="relative min-h-[calc(100svh-104px)] w-full overflow-hidden lg:min-h-[calc(100svh-176px)]">
       <SmartVideoBackground
         src="/assets/media/hero-legacy.mp4"
         poster="/assets/destinations/srinagar.jpg"

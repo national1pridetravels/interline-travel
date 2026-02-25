@@ -19,6 +19,8 @@ export const metadata: Metadata = {
   },
 }
 
+export const revalidate = 300
+
 const typeLabels: Record<string, string> = {
   family: 'Family',
   honeymoon: 'Honeymoon',
@@ -59,10 +61,10 @@ export default async function PackagesPage({
         )
 
   return (
-    <main className="min-h-screen bg-gray-50 py-24">
+    <main className="min-h-screen bg-[radial-gradient(circle_at_top,#133f61_0%,#0a2944_42%,#081d31_100%)] py-24 text-white">
       <div className="max-w-7xl mx-auto px-6">
-        <h1 className="text-4xl font-bold text-gray-900 mb-3">Kashmir Packages By Season</h1>
-        <p className="text-gray-600 mb-8">
+        <h1 className="mb-3 text-4xl font-bold text-white">Kashmir Packages By Season</h1>
+        <p className="mb-8 text-slate-200/90">
           {selectedType === 'all'
             ? 'Explore weather-based itineraries for winter, spring, summer, and autumn in Kashmir.'
             : `Showing ${typeLabels[selectedType] || selectedType} packages.`}
@@ -73,8 +75,8 @@ export default async function PackagesPage({
             href="/packages"
             className={`rounded-full px-4 py-2 text-sm font-medium transition ${
               selectedType === 'all'
-                ? 'bg-gray-900 text-white'
-                : 'border border-gray-300 bg-white text-gray-700 hover:border-gray-400'
+                ? 'bg-white text-slate-900'
+                : 'border border-white/35 bg-white/10 text-white hover:border-white/60'
             }`}
           >
             All Seasons
@@ -85,8 +87,8 @@ export default async function PackagesPage({
               href={`/packages?type=${season}`}
               className={`rounded-full px-4 py-2 text-sm font-medium transition ${
                 selectedType === season
-                  ? 'bg-gray-900 text-white'
-                  : 'border border-gray-300 bg-white text-gray-700 hover:border-gray-400'
+                  ? 'bg-white text-slate-900'
+                  : 'border border-white/35 bg-white/10 text-white hover:border-white/60'
               }`}
             >
               {typeLabels[season]}
@@ -95,9 +97,9 @@ export default async function PackagesPage({
         </div>
 
         {filteredPackages.length === 0 && (
-          <div className="bg-white rounded-xl p-6 border border-gray-200 mb-8">
-            <p className="text-gray-700 mb-4">No packages found for this filter.</p>
-            <Link href="/packages" className="text-blue-600 hover:text-blue-700 font-medium">
+          <div className="mb-8 rounded-xl border border-white/30 bg-white/10 p-6 backdrop-blur-lg">
+            <p className="mb-4 text-slate-100">No packages found for this filter.</p>
+            <Link href="/packages" className="font-medium text-cyan-100 hover:text-white">
               View all packages
             </Link>
           </div>
@@ -108,15 +110,19 @@ export default async function PackagesPage({
             <Link
               key={pkg.slug}
               href={`/packages/${pkg.slug}`}
-              className="bg-white rounded-2xl overflow-hidden shadow hover:shadow-lg transition block"
+              className="block overflow-hidden rounded-2xl border border-white/25 bg-white/10 shadow-[0_24px_42px_rgba(2,12,26,0.4)] backdrop-blur-xl transition hover:-translate-y-1 hover:bg-white/15"
             >
               <div className="relative h-52">
                 <Image src={pkg.image} alt={pkg.title} fill className="object-cover" />
               </div>
               <div className="p-5">
-                <h2 className="text-xl font-semibold text-gray-900 mb-2">{pkg.title}</h2>
-                <p className="text-sm text-gray-600 mb-1">{pkg.duration}</p>
-                <p className="font-bold text-gray-900">{pkg.priceFrom}</p>
+                <h2 className="mb-2 text-xl font-semibold text-white">{pkg.title}</h2>
+                <p className="text-sm text-cyan-100">
+                  Season: {typeLabels[pkg.season] || pkg.season}
+                </p>
+                {pkg.summary && (
+                  <p className="mt-3 text-sm text-slate-100/90">{pkg.summary}</p>
+                )}
               </div>
             </Link>
           ))}

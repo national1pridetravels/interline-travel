@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { FiAward, FiExternalLink, FiMapPin, FiMessageCircle, FiPhoneCall } from 'react-icons/fi'
-import { FaFacebookF, FaGoogle, FaInstagram, FaWhatsapp } from 'react-icons/fa'
+import { FaFacebookF, FaGoogle, FaInstagram } from 'react-icons/fa'
 
 export const metadata: Metadata = {
   title: 'About Kashmir Travel Agency',
@@ -58,25 +58,20 @@ const socialLinks = [
     href: 'https://share.google/wTGk0mGec3I2toC5W',
     icon: FaGoogle,
   },
-  {
-    label: 'WhatsApp Live Bot',
-    href: 'https://wa.me/919906469903?text=Hello%20National%20Pride%20Travels%2C%20I%20want%20to%20plan%20a%20Kashmir%20tour.',
-    icon: FaWhatsapp,
-  },
 ]
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-gradient-to-b from-[#eef6f8] via-[#f8f7ef] to-[#edf6f2] py-20">
+    <main className="min-h-screen bg-[radial-gradient(circle_at_top,#133f61_0%,#0a2944_42%,#081d31_100%)] py-20 text-white">
       <div className="mx-auto max-w-6xl px-6">
-        <header className="mb-10 rounded-3xl border border-white/70 bg-white/85 p-8 shadow-[0_18px_48px_rgba(15,35,58,0.16)] backdrop-blur-xl md:p-12">
-          <p className="mb-3 inline-flex rounded-full bg-[#0f3f69]/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[#0f3f69]">
+        <header className="mb-10 rounded-3xl border border-white/25 bg-white/10 p-8 shadow-[0_24px_52px_rgba(2,12,26,0.44)] backdrop-blur-xl md:p-12">
+          <p className="mb-3 inline-flex rounded-full bg-white/20 px-4 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-cyan-100">
             About National Pride Travels
           </p>
-          <h1 className="mb-4 text-4xl font-semibold text-slate-900 md:text-5xl">
+          <h1 className="mb-4 text-4xl font-semibold text-white md:text-5xl">
             Registered Kashmir Tour Company with Full Local Support
           </h1>
-          <p className="max-w-4xl text-lg leading-relaxed text-slate-700">
+          <p className="max-w-4xl text-lg leading-relaxed text-slate-100/90">
             National Pride Tour and Travel is a duly registered travel concern with the Directorate
             of Tourism, Government of Jammu and Kashmir, India. We deliver well-planned Kashmir
             journeys with transparent guidance, reliable operations, and 24/7 guest support.
@@ -84,54 +79,52 @@ export default function AboutPage() {
         </header>
 
         <section className="mb-10 grid gap-6 lg:grid-cols-2">
-          <article className="rounded-3xl border border-slate-200 bg-white p-7 shadow-[0_10px_30px_rgba(15,35,58,0.12)]">
-            <h2 className="mb-5 text-2xl font-semibold text-slate-900">Registration and Tax Details</h2>
-            <div className="space-y-4 text-slate-700">
+          <article className="rounded-3xl border border-white/25 bg-white/10 p-7 shadow-[0_24px_52px_rgba(2,12,26,0.4)] backdrop-blur-xl">
+            <h2 className="mb-5 text-2xl font-semibold text-white">Registration and Tax Details</h2>
+            <div className="space-y-4 text-slate-100">
               <p>
-                <span className="font-semibold text-slate-900">Entity:</span> National Pride Tour
+                <span className="font-semibold text-white">Entity:</span> National Pride Tour
                 and Travel
               </p>
               <p>
-                <span className="font-semibold text-slate-900">Department of Tourism Reg No:</span>{' '}
+                <span className="font-semibold text-white">Department of Tourism Reg No:</span>{' '}
                 JKAE00005259
               </p>
               <p>
-                <span className="font-semibold text-slate-900">GSTN:</span> 01AOZPH8135A1Z4A
+                <span className="font-semibold text-white">GSTN:</span> 01AOZPH8135A1Z4A
               </p>
               <p>
-                <span className="font-semibold text-slate-900">Registered Authority:</span>{' '}
+                <span className="font-semibold text-white">Registered Authority:</span>{' '}
                 Directorate of Tourism, Government of Jammu and Kashmir, India
               </p>
             </div>
           </article>
 
-          <article className="rounded-3xl border border-slate-200 bg-white p-7 shadow-[0_10px_30px_rgba(15,35,58,0.12)]">
-            <h2 className="mb-5 text-2xl font-semibold text-slate-900">24/7 Contact and Location</h2>
-            <div className="space-y-4 text-slate-700">
+          <article className="rounded-3xl border border-white/25 bg-white/10 p-7 shadow-[0_24px_52px_rgba(2,12,26,0.4)] backdrop-blur-xl">
+            <h2 className="mb-5 text-2xl font-semibold text-white">24/7 Contact and Location</h2>
+            <div className="space-y-4 text-slate-100">
               <p className="flex items-center gap-3">
                 <FiPhoneCall className="text-emerald-600" />
-                <a href="tel:+919906469903" className="font-semibold text-slate-900 hover:text-emerald-700">
+                <a href="tel:+919906469903" className="font-semibold text-white hover:text-emerald-200">
                   +91-9906469903
                 </a>
               </p>
               <p className="flex items-center gap-3">
                 <FiMessageCircle className="text-emerald-600" />
                 <a
-                  href="https://wa.me/919906469903?text=Hello%20National%20Pride%20Travels%2C%20I%20want%20to%20plan%20a%20Kashmir%20tour."
-                  target="_blank"
-                  rel="noreferrer"
-                  className="font-semibold text-slate-900 hover:text-emerald-700"
+                  href="#whatsapp-chat"
+                  className="font-semibold text-white hover:text-emerald-200"
                 >
-                  WhatsApp Live Bot
+                  WhatsApp Chatbot
                 </a>
               </p>
               <p>
-                <span className="font-semibold text-slate-900">Email:</span>{' '}
-                <a href="mailto:info@nationalpridetravels.com" className="hover:text-emerald-700">
+                <span className="font-semibold text-white">Email:</span>{' '}
+                <a href="mailto:info@nationalpridetravels.com" className="hover:text-emerald-200">
                   info@nationalpridetravels.com
                 </a>
                 {' · '}
-                <a href="mailto:nationalpridetravels@gmail.com" className="hover:text-emerald-700">
+                <a href="mailto:nationalpridetravels@gmail.com" className="hover:text-emerald-200">
                   nationalpridetravels@gmail.com
                 </a>
               </p>
@@ -145,7 +138,7 @@ export default function AboutPage() {
                 href="https://maps.google.com/?q=MACHOWA+BAGHI+MEHTAB+SRINAGAR+JAMMU+AND+KASHMIR+INDIA+190015"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800"
+                className="inline-flex items-center gap-2 rounded-full bg-white text-slate-900 px-4 py-2 text-sm font-semibold transition hover:bg-slate-100"
               >
                 Open Location
                 <FiExternalLink />
@@ -154,28 +147,28 @@ export default function AboutPage() {
           </article>
         </section>
 
-        <section className="mb-10 rounded-3xl border border-white/70 bg-white/85 p-7 shadow-[0_18px_48px_rgba(15,35,58,0.14)] md:p-10">
-          <h2 className="mb-6 text-3xl font-semibold text-slate-900">Our Achievements</h2>
+        <section className="mb-10 rounded-3xl border border-white/25 bg-white/10 p-7 shadow-[0_24px_52px_rgba(2,12,26,0.4)] backdrop-blur-xl md:p-10">
+          <h2 className="mb-6 text-3xl font-semibold text-white">Our Achievements</h2>
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {achievements.map((item) => (
               <article
                 key={item.title}
-                className="rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_8px_22px_rgba(15,35,58,0.1)]"
+                className="rounded-2xl border border-white/25 bg-white/10 p-5 shadow-[0_18px_30px_rgba(2,12,26,0.35)]"
               >
                 <div className="mb-3 inline-flex h-11 w-11 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
                   <FiAward size={18} />
                 </div>
-                <p className="text-3xl font-semibold text-slate-900">{item.value}</p>
-                <p className="mt-1 text-sm font-semibold text-slate-800">{item.title}</p>
-                <p className="mt-2 text-sm leading-relaxed text-slate-600">{item.description}</p>
+                <p className="text-3xl font-semibold text-white">{item.value}</p>
+                <p className="mt-1 text-sm font-semibold text-slate-100">{item.title}</p>
+                <p className="mt-2 text-sm leading-relaxed text-slate-200/90">{item.description}</p>
               </article>
             ))}
           </div>
         </section>
 
-        <section className="rounded-3xl border border-slate-200 bg-white p-7 shadow-[0_10px_30px_rgba(15,35,58,0.12)] md:p-10">
-          <h2 className="mb-4 text-3xl font-semibold text-slate-900">Connect With National Pride Travels</h2>
-          <p className="mb-6 max-w-4xl text-slate-700">
+        <section className="rounded-3xl border border-white/25 bg-white/10 p-7 shadow-[0_24px_52px_rgba(2,12,26,0.4)] backdrop-blur-xl md:p-10">
+          <h2 className="mb-4 text-3xl font-semibold text-white">Connect With National Pride Travels</h2>
+          <p className="mb-6 max-w-4xl text-slate-200/90">
             Follow us on social channels, connect on WhatsApp, and check our Google profile for
             location and latest updates.
           </p>
@@ -187,7 +180,7 @@ export default function AboutPage() {
                 href={href}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center justify-between rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-900 transition hover:border-emerald-300 hover:bg-emerald-50"
+                className="inline-flex items-center justify-between rounded-2xl border border-white/25 bg-white/10 px-4 py-3 text-sm font-semibold text-white transition hover:border-emerald-300/70 hover:bg-emerald-500/20"
               >
                 <span className="inline-flex items-center gap-2">
                   <Icon />
@@ -207,7 +200,7 @@ export default function AboutPage() {
             </Link>
             <Link
               href="/contact"
-              className="inline-flex rounded-full border border-slate-300 bg-white px-6 py-3 font-semibold text-slate-900 transition hover:bg-slate-100"
+              className="inline-flex rounded-full border border-white/35 bg-white/10 px-6 py-3 font-semibold text-white transition hover:bg-white/20"
             >
               Contact Us
             </Link>

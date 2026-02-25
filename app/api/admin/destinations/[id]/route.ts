@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import prisma from '@/lib/db/prisma'
 import { requireAuthenticatedAdmin } from '@/lib/admin/auth'
+import { invalidateContentCache } from '@/lib/content/store'
 
 type DestinationPayload = {
   slug?: string
@@ -110,6 +111,8 @@ export async function PUT(
       data: entry,
     })
 
+    invalidateContentCache('destinations')
+
     return NextResponse.json({
       success: true,
       destination: updated,
@@ -141,6 +144,8 @@ export async function DELETE(
         id: params.id,
       },
     })
+
+    invalidateContentCache('destinations')
 
     return NextResponse.json({ success: true })
   } catch (error) {

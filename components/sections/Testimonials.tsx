@@ -1,5 +1,3 @@
-'use client'
-
 import { FiStar } from 'react-icons/fi'
 
 const testimonials = [
@@ -37,9 +35,9 @@ export default function Testimonials() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
+          {testimonials.map((testimonial) => (
             <div
-              key={index}
+              key={`${testimonial.name}-${testimonial.location}`}
               className="rounded-3xl border border-white/70 bg-white/80 p-8 shadow-[0_14px_34px_rgba(15,35,58,0.14)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(15,35,58,0.2)]"
             >
               <div className="flex gap-1 mb-4">

@@ -1,4 +1,5 @@
 import type { DestinationEntry, PackageEntry, SiteConfig } from '@prisma/client'
+import { revalidateTag, unstable_cache } from 'next/cache'
 import prisma from '@/lib/db/prisma'
 import { hashPassword } from '@/lib/admin/password'
 import {
@@ -11,6 +12,12 @@ import { destinationList as fallbackDestinationList, type Destination } from '@/
 
 const DEFAULT_ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@nationalpride.com'
 const DEFAULT_ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123'
+const CONTENT_REVALIDATE_SECONDS = 300
+const CONTENT_CACHE_TAGS = {
+  siteConfig: 'content-site-config',
+  destinations: 'content-destinations',
+  packages: 'content-packages',
+}
 
 export type PackageItem = {
   id?: string
@@ -223,6 +230,104 @@ function mapSiteConfig(config: SiteConfig): SiteConfigData {
   }
 }
 
+async function querySiteConfig() {
+  const config = await prisma.siteConfig.findUnique({ where: { id: 1 } })
+  if (!config) {
+    return defaultSiteConfig
+  }
+
+  return mapSiteConfig(config)
+}
+
+const getCachedSiteConfig = unstable_cache(querySiteConfig, ['site-config'], {
+  revalidate: CONTENT_REVALIDATE_SECONDS,
+  tags: [CONTENT_CACHE_TAGS.siteConfig],
+})
+
+async function queryDestinations() {
+  const rows = await prisma.destinationEntry.findMany({
+    orderBy: [{ isFeatured: 'desc' }, { name: 'asc' }],
+  })
+
+  return rows.length ? rows.map(mapDestination) : fallbackDestinationList
+}
+
+const getCachedDestinations = unstable_cache(queryDestinations, ['destinations'], {
+  revalidate: CONTENT_REVALIDATE_SECONDS,
+  tags: [CONTENT_CACHE_TAGS.destinations],
+})
+
+async function queryFeaturedDestinations() {
+  const fallback = fallbackDestinationList.filter((destination) =>
+    defaultFeaturedDestinationSlugs.includes(destination.slug)
+  )
+
+  const rows = await prisma.destinationEntry.findMany({
+    where: { isFeatured: true },
+    orderBy: { name: 'asc' },
+  })
+
+  return rows.length ? rows.map(mapDestination) : fallback
+}
+
+const getCachedFeaturedDestinations = unstable_cache(
+  queryFeaturedDestinations,
+  ['featured-destinations'],
+  {
+    revalidate: CONTENT_REVALIDATE_SECONDS,
+    tags: [CONTENT_CACHE_TAGS.destinations],
+  }
+)
+
+async function queryHighlightDestinations() {
+  const fallback = fallbackDestinationList.filter((destination) =>
+    defaultHighlightDestinationSlugs.includes(destination.slug)
+  )
+
+  const rows = await prisma.destinationEntry.findMany({
+    where: { isHighlight: true },
+    orderBy: { name: 'asc' },
+  })
+
+  return rows.length ? rows.map(mapDestination) : fallback
+}
+
+const getCachedHighlightDestinations = unstable_cache(
+  queryHighlightDestinations,
+  ['highlight-destinations'],
+  {
+    revalidate: CONTENT_REVALIDATE_SECONDS,
+    tags: [CONTENT_CACHE_TAGS.destinations],
+  }
+)
+
+async function queryPackages() {
+  const rows = await prisma.packageEntry.findMany({
+    orderBy: [{ season: 'asc' }, { title: 'asc' }],
+  })
+
+  return rows.length ? rows.map(mapPackage) : fallbackPackages
+}
+
+const getCachedPackages = unstable_cache(queryPackages, ['packages'], {
+  revalidate: CONTENT_REVALIDATE_SECONDS,
+  tags: [CONTENT_CACHE_TAGS.packages],
+})
+
+export function invalidateContentCache(
+  scope: 'site-config' | 'destinations' | 'packages' | 'all' = 'all'
+) {
+  if (scope === 'all' || scope === 'site-config') {
+    revalidateTag(CONTENT_CACHE_TAGS.siteConfig)
+  }
+  if (scope === 'all' || scope === 'destinations') {
+    revalidateTag(CONTENT_CACHE_TAGS.destinations)
+  }
+  if (scope === 'all' || scope === 'packages') {
+    revalidateTag(CONTENT_CACHE_TAGS.packages)
+  }
+}
+
 export async function getSiteConfig() {
   try {
     await bootstrapAdminData()
@@ -230,12 +335,7 @@ export async function getSiteConfig() {
       return defaultSiteConfig
     }
 
-    const config = await prisma.siteConfig.findUnique({ where: { id: 1 } })
-    if (!config) {
-      return defaultSiteConfig
-    }
-
-    return mapSiteConfig(config)
+    return getCachedSiteConfig()
   } catch (error) {
     markDatabaseUnavailable(error)
     return defaultSiteConfig
@@ -249,11 +349,7 @@ export async function getDestinations() {
       return fallbackDestinationList
     }
 
-    const rows = await prisma.destinationEntry.findMany({
-      orderBy: [{ isFeatured: 'desc' }, { name: 'asc' }],
-    })
-
-    return rows.length ? rows.map(mapDestination) : fallbackDestinationList
+    return getCachedDestinations()
   } catch (error) {
     markDatabaseUnavailable(error)
     return fallbackDestinationList
@@ -261,23 +357,13 @@ export async function getDestinations() {
 }
 
 export async function getDestinationBySlug(slug: string) {
-  const fallback = fallbackDestinationList.find((destination) => destination.slug === slug) || null
+  const normalizedSlug = slug.trim().toLowerCase()
+  const fallback =
+    fallbackDestinationList.find((destination) => destination.slug === normalizedSlug) || null
 
   try {
-    await bootstrapAdminData()
-    if (!databaseAvailable) {
-      return fallback
-    }
-
-    const row = await prisma.destinationEntry.findUnique({
-      where: { slug },
-    })
-
-    if (!row) {
-      return fallback
-    }
-
-    return mapDestination(row)
+    const destinations = await getDestinations()
+    return destinations.find((destination) => destination.slug === normalizedSlug) || fallback
   } catch (error) {
     markDatabaseUnavailable(error)
     return fallback
@@ -295,16 +381,7 @@ export async function getFeaturedDestinations() {
       return fallback
     }
 
-    const rows = await prisma.destinationEntry.findMany({
-      where: { isFeatured: true },
-      orderBy: { name: 'asc' },
-    })
-
-    if (rows.length === 0) {
-      return fallback
-    }
-
-    return rows.map(mapDestination)
+    return getCachedFeaturedDestinations()
   } catch (error) {
     markDatabaseUnavailable(error)
     return fallback
@@ -322,16 +399,7 @@ export async function getHighlightDestinations() {
       return fallback
     }
 
-    const rows = await prisma.destinationEntry.findMany({
-      where: { isHighlight: true },
-      orderBy: { name: 'asc' },
-    })
-
-    if (rows.length === 0) {
-      return fallback
-    }
-
-    return rows.map(mapDestination)
+    return getCachedHighlightDestinations()
   } catch (error) {
     markDatabaseUnavailable(error)
     return fallback
@@ -345,11 +413,7 @@ export async function getPackages() {
       return fallbackPackages
     }
 
-    const rows = await prisma.packageEntry.findMany({
-      orderBy: [{ season: 'asc' }, { title: 'asc' }],
-    })
-
-    return rows.length ? rows.map(mapPackage) : fallbackPackages
+    return getCachedPackages()
   } catch (error) {
     markDatabaseUnavailable(error)
     return fallbackPackages
@@ -357,23 +421,12 @@ export async function getPackages() {
 }
 
 export async function getPackageBySlug(slug: string) {
-  const fallback = fallbackPackages.find((entry) => entry.slug === slug) || null
+  const normalizedSlug = slug.trim().toLowerCase()
+  const fallback = fallbackPackages.find((entry) => entry.slug === normalizedSlug) || null
 
   try {
-    await bootstrapAdminData()
-    if (!databaseAvailable) {
-      return fallback
-    }
-
-    const row = await prisma.packageEntry.findUnique({
-      where: { slug },
-    })
-
-    if (!row) {
-      return fallback
-    }
-
-    return mapPackage(row)
+    const packages = await getPackages()
+    return packages.find((entry) => entry.slug === normalizedSlug) || fallback
   } catch (error) {
     markDatabaseUnavailable(error)
     return fallback

@@ -18,6 +18,8 @@ export const metadata: Metadata = {
   },
 }
 
+export const revalidate = 300
+
 const seasonOptions = ['all', 'winter', 'spring', 'summer', 'autumn', 'all-season'] as const
 
 function toSeasonParam(season: string) {
@@ -27,32 +29,52 @@ function toSeasonParam(season: string) {
 export default async function DestinationsPage({
   searchParams,
 }: {
-  searchParams?: { type?: string; season?: string }
+  searchParams?: { type?: string; season?: string; query?: string }
 }) {
   const destinations = await getDestinations()
   const selectedSeason = (searchParams?.season || searchParams?.type || 'all').toLowerCase()
-  const filteredDestinations =
+  const queryRaw = (searchParams?.query || '').trim()
+  const query = queryRaw.toLowerCase()
+
+  const seasonFilteredDestinations =
     selectedSeason === 'all'
       ? destinations
       : destinations.filter(
           (destination) => toSeasonParam(destination.season) === selectedSeason
         )
 
+  const filteredDestinations = query
+    ? seasonFilteredDestinations.filter((destination) =>
+        [
+          destination.name,
+          destination.tagline,
+          destination.shortDescription,
+          destination.bestSeason,
+        ]
+          .join(' ')
+          .toLowerCase()
+          .includes(query)
+      )
+    : seasonFilteredDestinations
+
   return (
-    <main className="min-h-screen bg-[#eef4f7] py-24">
+    <main className="min-h-screen bg-[radial-gradient(circle_at_top,#0f3150_0%,#08223a_38%,#071a2c_100%)] py-24 text-white">
       <div className="section-wrap">
         <div className="mb-10">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-teal-700">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-200">
             Destination Directory
           </p>
-          <h1 className="headline-main font-semibold mb-2">
+          <h1 className="headline-main mb-2 font-semibold text-white">
             Explore Kashmir Destinations By Season
           </h1>
-          <p className="text-slate-600">
+          <p className="text-slate-200/90">
             {selectedSeason === 'all'
               ? 'Browse famous Kashmir locations across winter, spring, summer, and autumn.'
               : `Showing ${selectedSeason.replace('-', ' ')} destinations.`}
           </p>
+          {query && (
+            <p className="mt-2 text-sm text-cyan-100">Search keyword: {queryRaw}</p>
+          )}
         </div>
 
         <div className="mb-8 flex flex-wrap gap-3">
@@ -62,8 +84,8 @@ export default async function DestinationsPage({
               href={season === 'all' ? '/destinations' : `/destinations?season=${season}`}
               className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
                 selectedSeason === season
-                  ? 'bg-slate-900 text-white'
-                  : 'border border-slate-300 bg-white text-slate-700 hover:border-slate-400'
+                  ? 'bg-white text-slate-900'
+                  : 'border border-white/35 bg-white/10 text-white hover:border-white/55'
               }`}
             >
               {season === 'all'
@@ -77,11 +99,11 @@ export default async function DestinationsPage({
         </div>
 
         {filteredDestinations.length === 0 && (
-          <div className="mb-8 rounded-2xl border border-slate-200 bg-white p-6">
-            <p className="text-slate-700 mb-3">No destinations found for this season.</p>
+          <div className="mb-8 rounded-2xl border border-white/30 bg-white/10 p-6 backdrop-blur-lg">
+            <p className="mb-3 text-slate-100">No destinations found for this selection.</p>
             <Link
               href="/destinations"
-              className="text-sm font-semibold text-teal-700 hover:text-teal-800"
+              className="text-sm font-semibold text-cyan-100 hover:text-white"
             >
               View all destinations
             </Link>
@@ -93,7 +115,7 @@ export default async function DestinationsPage({
             <Link
               key={destination.slug}
               href={`/destinations/${destination.slug}`}
-              className="overflow-hidden rounded-3xl border border-white/80 bg-white shadow-[0_18px_40px_rgba(15,35,58,0.12)] transition hover:-translate-y-1 hover:shadow-[0_22px_46px_rgba(15,35,58,0.18)]"
+              className="overflow-hidden rounded-3xl border border-white/25 bg-white/10 shadow-[0_24px_44px_rgba(2,12,26,0.45)] backdrop-blur-xl transition hover:-translate-y-1 hover:bg-white/15"
             >
               <div className="relative h-52">
                 <Image
@@ -107,16 +129,16 @@ export default async function DestinationsPage({
                 <div className="absolute right-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-slate-800">
                   {destination.season}
                 </div>
-                <div className="absolute bottom-4 left-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-slate-800">
+                <div className="absolute bottom-4 left-4 rounded-full bg-black/45 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-white">
                   {destination.category}
                 </div>
               </div>
 
               <div className="p-5">
-                <h2 className="mb-1 text-2xl font-semibold text-slate-900">{destination.name}</h2>
-                <p className="mb-3 text-sm text-slate-600">{destination.tagline}</p>
-                <p className="text-sm text-slate-700">{destination.shortDescription}</p>
-                <p className="mt-4 text-xs font-semibold uppercase tracking-[0.14em] text-teal-700">
+                <h2 className="mb-1 text-2xl font-semibold text-white">{destination.name}</h2>
+                <p className="mb-3 text-sm text-cyan-100">{destination.tagline}</p>
+                <p className="text-sm text-slate-100/90">{destination.shortDescription}</p>
+                <p className="mt-4 text-xs font-semibold uppercase tracking-[0.14em] text-emerald-200">
                   Best Season: {destination.bestSeason}
                 </p>
               </div>

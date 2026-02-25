@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { FiClock, FiExternalLink, FiMail, FiMapPin, FiMessageCircle, FiPhone } from 'react-icons/fi'
-import { FaFacebookF, FaGoogle, FaInstagram, FaWhatsapp } from 'react-icons/fa'
+import { FaFacebookF, FaGoogle, FaInstagram } from 'react-icons/fa'
 
 const socialLinks = [
   {
@@ -17,11 +17,6 @@ const socialLinks = [
     label: 'Google Profile',
     href: 'https://share.google/wTGk0mGec3I2toC5W',
     icon: FaGoogle,
-  },
-  {
-    label: 'WhatsApp Live Bot',
-    href: 'https://wa.me/919906469903?text=Hello%20National%20Pride%20Travels%2C%20I%20want%20to%20plan%20a%20Kashmir%20tour.',
-    icon: FaWhatsapp,
   },
 ]
 
@@ -112,12 +107,10 @@ export default function Footer() {
                   <p className="mt-1 flex items-center gap-2">
                     <FiMessageCircle size={14} />
                     <a
-                      href="https://wa.me/919906469903?text=Hello%20National%20Pride%20Travels%2C%20I%20want%20to%20plan%20a%20Kashmir%20tour."
-                      target="_blank"
-                      rel="noreferrer"
+                      href="#whatsapp-chat"
                       className="hover:text-white"
                     >
-                      WhatsApp Live Bot
+                      WhatsApp Chatbot
                     </a>
                   </p>
                 </div>

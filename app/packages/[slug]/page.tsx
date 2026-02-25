@@ -1,12 +1,21 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { getDestinationBySlug, getPackageBySlug } from '@/lib/content/store'
+import { getDestinationBySlug, getPackageBySlug, getPackages } from '@/lib/content/store'
 
 function formatSlug(slug: string) {
   return slug
     .split('-')
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ')
+}
+
+export const revalidate = 300
+
+export async function generateStaticParams() {
+  const packages = await getPackages()
+  return packages.map((pkg) => ({
+    slug: pkg.slug,
+  }))
 }
 
 export async function generateMetadata({

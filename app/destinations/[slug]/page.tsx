@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { getDestinationBySlug } from '@/lib/content/store'
+import { getDestinationBySlug, getDestinations } from '@/lib/content/store'
 import type { Destination } from '@/lib/destinations'
 
 function formatSlug(slug: string) {
@@ -29,6 +29,15 @@ function getFallbackDestination(slug: string): Destination {
     highlights: ['Custom itinerary support', 'Stay recommendations', 'Ground assistance'],
     attractions: ['Flexible location coverage'],
   }
+}
+
+export const revalidate = 300
+
+export async function generateStaticParams() {
+  const destinations = await getDestinations()
+  return destinations.map((destination) => ({
+    slug: destination.slug,
+  }))
 }
 
 export async function generateMetadata({
@@ -134,23 +143,21 @@ export default async function DestinationDetailPage({
 
           <aside className="space-y-6">
             <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-[0_14px_34px_rgba(15,35,58,0.14)]">
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                className="h-52 w-full object-cover"
-                aria-hidden="true"
-              >
-                <source src="/assets/media/hero-legacy.mp4" type="video/mp4" />
-              </video>
+              <div className="relative h-52 w-full">
+                <Image
+                  src={destination.heroImage || '/assets/destinations/srinagar.jpg'}
+                  alt={`${destination.name} scenic view`}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 420px"
+                  className="object-cover"
+                />
+              </div>
               <div className="p-5">
                 <p className="text-xs uppercase tracking-[0.16em] text-teal-700 mb-2">
                   Cinematic Preview
                 </p>
                 <p className="text-sm text-slate-700">
-                  A visual route preview to match your on-ground itinerary style.
+                  A quick visual route preview to match your on-ground itinerary style.
                 </p>
               </div>
             </div>

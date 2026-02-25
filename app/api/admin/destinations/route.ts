@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import prisma from '@/lib/db/prisma'
 import { requireAuthenticatedAdmin } from '@/lib/admin/auth'
-import { bootstrapAdminData } from '@/lib/content/store'
+import { bootstrapAdminData, invalidateContentCache } from '@/lib/content/store'
 
 type DestinationPayload = {
   slug?: string
@@ -150,6 +150,8 @@ export async function POST(request: Request) {
     const created = await prisma.destinationEntry.create({
       data: entry,
     })
+
+    invalidateContentCache('destinations')
 
     return NextResponse.json({
       success: true,

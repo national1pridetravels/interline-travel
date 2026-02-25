@@ -29,3 +29,4 @@ pnpm-debug.log*
 prisma/*.db
 prisma/*.db-journal
 .vercel
+.env*.local
