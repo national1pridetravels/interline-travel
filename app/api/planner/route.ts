@@ -49,21 +49,32 @@ export async function POST(request: Request) {
     const checkOutDate = toSafeDate(payload.checkOut, nextDay)
 
     const leadLabel = `Instant Plan Builder - ${destination} (${budget})`
-    const booking = await prisma.booking.create({
-      data: {
-        name,
-        email: email || 'no-email@nationalpridetravels.com',
-        phone,
-        package: leadLabel,
-        travelers,
-        checkIn: checkInDate,
-        checkOut: checkOutDate,
-      },
-    })
+    let leadId = `plan-${Date.now()}`
+    let saved = false
+
+    try {
+      const booking = await prisma.booking.create({
+        data: {
+          name,
+          email: email || 'no-email@nationalpridetravels.com',
+          phone,
+          package: leadLabel,
+          travelers,
+          checkIn: checkInDate,
+          checkOut: checkOutDate,
+        },
+      })
+
+      leadId = booking.id
+      saved = true
+    } catch (databaseError) {
+      console.error('Planner DB write failed, using email fallback:', databaseError)
+    }
 
     const html = `
       <h2>New Instant Plan Builder Request</h2>
-      <p><strong>Lead ID:</strong> ${sanitizeHtml(booking.id)}</p>
+      <p><strong>Lead ID:</strong> ${sanitizeHtml(leadId)}</p>
+      <p><strong>Stored In DB:</strong> ${saved ? 'Yes' : 'No (email fallback)'}</p>
       <p><strong>Name:</strong> ${sanitizeHtml(name)}</p>
       <p><strong>Email:</strong> ${sanitizeHtml(email || 'Not provided')}</p>
       <p><strong>Phone:</strong> ${sanitizeHtml(phone)}</p>
@@ -74,16 +85,37 @@ export async function POST(request: Request) {
       <p><strong>Check Out:</strong> ${sanitizeHtml(checkOutDate.toISOString())}</p>
     `
 
-    const mailStatus = await sendLeadMail({
-      subject: `Instant Plan Request - ${name}`,
-      html,
-      replyTo: email || undefined,
-    })
+    let mailStatus: { delivered: boolean; reason?: string } = { delivered: false }
+    try {
+      mailStatus = await sendLeadMail({
+        subject: `Instant Plan Request - ${name}`,
+        html,
+        replyTo: email || undefined,
+      })
+    } catch (mailError) {
+      console.error('Planner lead email failed:', mailError)
+    }
+
+    if (!saved && !mailStatus.delivered) {
+      console.error('Planner request accepted with log-only fallback', {
+        leadId,
+        name,
+        email,
+        phone,
+        destination,
+        budget,
+        travelers,
+        checkIn: checkInDate.toISOString(),
+        checkOut: checkOutDate.toISOString(),
+      })
+    }
 
     return NextResponse.json({
       success: true,
-      leadId: booking.id,
+      leadId,
+      saved,
       mailed: mailStatus.delivered,
+      queued: !saved && !mailStatus.delivered,
     })
   } catch (error) {
     console.error('Planner request failed:', error)

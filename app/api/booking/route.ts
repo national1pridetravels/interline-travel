@@ -39,21 +39,31 @@ export async function POST(req: Request) {
       )
     }
 
-    const booking = await prisma.booking.create({
-      data: {
-        name,
-        email,
-        phone,
-        package: packageName,
-        travelers,
-        checkIn: checkInDate,
-        checkOut: checkOutDate,
-      },
-    })
+    let bookingId = `booking-${Date.now()}`
+    let saved = false
+
+    try {
+      const booking = await prisma.booking.create({
+        data: {
+          name,
+          email,
+          phone,
+          package: packageName,
+          travelers,
+          checkIn: checkInDate,
+          checkOut: checkOutDate,
+        },
+      })
+      bookingId = booking.id
+      saved = true
+    } catch (databaseError) {
+      console.error('Booking DB write failed, using email fallback:', databaseError)
+    }
 
     const html = `
       <h2>New Booking Request</h2>
-      <p><strong>Booking ID:</strong> ${sanitizeHtml(booking.id)}</p>
+      <p><strong>Booking ID:</strong> ${sanitizeHtml(bookingId)}</p>
+      <p><strong>Stored In DB:</strong> ${saved ? 'Yes' : 'No (email fallback)'}</p>
       <p><strong>Name:</strong> ${sanitizeHtml(name)}</p>
       <p><strong>Email:</strong> ${sanitizeHtml(email)}</p>
       <p><strong>Phone:</strong> ${sanitizeHtml(phone)}</p>
@@ -63,16 +73,36 @@ export async function POST(req: Request) {
       <p><strong>Check Out:</strong> ${sanitizeHtml(checkOutDate?.toISOString() || 'Not selected')}</p>
     `
 
-    const mailStatus = await sendLeadMail({
-      subject: `New Booking Lead - ${name}`,
-      html,
-      replyTo: email,
-    })
+    let mailStatus: { delivered: boolean; reason?: string } = { delivered: false }
+    try {
+      mailStatus = await sendLeadMail({
+        subject: `New Booking Lead - ${name}`,
+        html,
+        replyTo: email,
+      })
+    } catch (mailError) {
+      console.error('Booking lead email failed:', mailError)
+    }
+
+    if (!saved && !mailStatus.delivered) {
+      console.error('Booking request accepted with log-only fallback', {
+        bookingId,
+        name,
+        email,
+        phone,
+        package: packageName,
+        travelers,
+        checkIn: checkInDate.toISOString(),
+        checkOut: checkOutDate?.toISOString() || null,
+      })
+    }
 
     return NextResponse.json({
       success: true,
-      bookingId: booking.id,
+      bookingId,
+      saved,
       mailed: mailStatus.delivered,
+      queued: !saved && !mailStatus.delivered,
     })
   } catch (error) {
     console.error(error)
