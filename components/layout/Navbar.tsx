@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { FiChevronDown, FiMenu, FiSearch, FiX } from 'react-icons/fi'
 import { destinationList, type Destination } from '@/lib/destinations'
+import SmartVideoBackground from '@/components/ui/SmartVideoBackground'
 
 const navItems = [
   { href: '/packages', label: 'Packages By Season' },
@@ -261,12 +262,13 @@ export default function Navbar({
 
                 <div className="overflow-hidden rounded-3xl border border-slate-200 bg-slate-900">
                   <div className="relative h-40 w-full">
-                    <Image
-                      src="/assets/destinations/srinagar.jpg"
-                      alt="Aerial view of Kashmir"
-                      fill
-                      sizes="420px"
-                      className="object-cover"
+                    <SmartVideoBackground
+                      src="/assets/media/hero-legacy.mp4"
+                      poster="/assets/destinations/srinagar.jpg"
+                      preload="metadata"
+                      disableOnMobile={false}
+                      forceVideo
+                      className="h-full w-full object-cover"
                     />
                   </div>
                   <div className="p-4 text-white">

@@ -25,8 +25,9 @@ export default function HeroSection({ heroConfig = defaultHeroConfig }: HeroSect
       <SmartVideoBackground
         src="/assets/media/hero-legacy.mp4"
         poster="/assets/destinations/srinagar.jpg"
-        preload="none"
-        pauseWhenOffscreen
+        preload="metadata"
+        disableOnMobile={false}
+        forceVideo
         className="absolute inset-0 h-full w-full object-cover"
       />
 

@@ -10,6 +10,7 @@ type SmartVideoBackgroundProps = {
   className?: string
   pauseWhenOffscreen?: boolean
   disableOnMobile?: boolean
+  forceVideo?: boolean
 }
 
 export default function SmartVideoBackground({
@@ -19,11 +20,17 @@ export default function SmartVideoBackground({
   className = '',
   pauseWhenOffscreen = false,
   disableOnMobile = true,
+  forceVideo = false,
 }: SmartVideoBackgroundProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
-  const [canUseVideo, setCanUseVideo] = useState(false)
+  const [canUseVideo, setCanUseVideo] = useState(forceVideo)
 
   useEffect(() => {
+    if (forceVideo) {
+      setCanUseVideo(true)
+      return
+    }
+
     const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
     const mobileQuery = window.matchMedia('(max-width: 900px)')
     const connection = (
@@ -56,7 +63,7 @@ export default function SmartVideoBackground({
       removeReducedMotionListener()
       removeMobileListener()
     }
-  }, [disableOnMobile])
+  }, [disableOnMobile, forceVideo])
 
   useEffect(() => {
     if (!canUseVideo) {
@@ -74,10 +81,14 @@ export default function SmartVideoBackground({
     video.defaultMuted = true
     video.playsInline = true
 
+    let cancelled = false
+
     const tryPlay = () => {
       const playPromise = video.play()
       if (playPromise && typeof playPromise.catch === 'function') {
-        playPromise.catch(() => {})
+        playPromise.catch(() => {
+          if (cancelled) return
+        })
       }
     }
 
@@ -119,11 +130,25 @@ export default function SmartVideoBackground({
     }
     document.addEventListener('visibilitychange', handleVisibility)
 
+    const handleUserInteraction = () => {
+      if (document.hidden) return
+      tryPlay()
+    }
+    window.addEventListener('pointerdown', handleUserInteraction, { passive: true })
+    window.addEventListener('touchstart', handleUserInteraction, { passive: true })
+    window.addEventListener('keydown', handleUserInteraction)
+    window.addEventListener('scroll', handleUserInteraction, { passive: true })
+
     return () => {
+      cancelled = true
       video.removeEventListener('loadedmetadata', handleReady)
       video.removeEventListener('canplay', handleReady)
       video.removeEventListener('canplaythrough', handleReady)
       document.removeEventListener('visibilitychange', handleVisibility)
+      window.removeEventListener('pointerdown', handleUserInteraction)
+      window.removeEventListener('touchstart', handleUserInteraction)
+      window.removeEventListener('keydown', handleUserInteraction)
+      window.removeEventListener('scroll', handleUserInteraction)
       if (observer) {
         observer.disconnect()
       }
