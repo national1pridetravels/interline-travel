@@ -24,6 +24,7 @@ export default function SmartVideoBackground({
 }: SmartVideoBackgroundProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [canUseVideo, setCanUseVideo] = useState(forceVideo)
+  const [requiresManualStart, setRequiresManualStart] = useState(false)
 
   useEffect(() => {
     if (forceVideo) {
@@ -71,6 +72,7 @@ export default function SmartVideoBackground({
       if (video) {
         video.pause()
       }
+      setRequiresManualStart(false)
       return
     }
 
@@ -86,9 +88,18 @@ export default function SmartVideoBackground({
     const tryPlay = () => {
       const playPromise = video.play()
       if (playPromise && typeof playPromise.catch === 'function') {
-        playPromise.catch(() => {
-          if (cancelled) return
+        playPromise.then(() => {
+          if (!cancelled) {
+            setRequiresManualStart(false)
+          }
         })
+        playPromise.catch(() => {
+          if (!cancelled) {
+            setRequiresManualStart(true)
+          }
+        })
+      } else {
+        setRequiresManualStart(false)
       }
     }
 
@@ -175,18 +186,40 @@ export default function SmartVideoBackground({
   }
 
   return (
-    <video
-      ref={videoRef}
-      autoPlay
-      loop
-      muted
-      playsInline
-      preload={preload}
-      poster={poster}
-      className={className}
-      aria-hidden="true"
-    >
-      <source src={src} type="video/mp4" />
-    </video>
+    <div className={`relative ${className}`} aria-hidden="true">
+      <video
+        ref={videoRef}
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload={preload}
+        poster={poster}
+        className="h-full w-full object-cover"
+      >
+        <source src={src} type="video/mp4" />
+      </video>
+
+      {requiresManualStart ? (
+        <button
+          type="button"
+          onClick={() => {
+            const video = videoRef.current
+            if (!video) return
+            video.muted = true
+            video.defaultMuted = true
+            const playPromise = video.play()
+            if (playPromise && typeof playPromise.catch === 'function') {
+              playPromise
+                .then(() => setRequiresManualStart(false))
+                .catch(() => setRequiresManualStart(true))
+            }
+          }}
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/55 bg-black/45 px-5 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-white backdrop-blur-md"
+        >
+          Play Video
+        </button>
+      ) : null}
+    </div>
   )
 }
