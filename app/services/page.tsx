@@ -1,241 +1,130 @@
-import { FiStar, FiClock, FiMapPin } from 'react-icons/fi'
+import type { Metadata } from 'next'
+import Image from 'next/image'
+import Link from 'next/link'
+import { FiArrowRight, FiCheckCircle } from 'react-icons/fi'
+import ServicesSection from '@/components/sections/ServicesSection'
 
-const activities = [
-  {
-    id: 1,
-    title: 'Shikara Ride',
-    location: 'Ghat 17, Hotel Pride Continental, Boulevard Road, Rainawari, Srinagar',
-    price: 770,
-    duration: '1 hour',
-    rating: 5,
-    reviews: 6,
-    featured: true,
+export const metadata: Metadata = {
+  title: 'Cab and Transport Services in Kashmir',
+  description:
+    'Book verified cab and transport services in Kashmir with airport transfers, Srinagar-Gulmarg-Pahalgam-Sonmarg routes, and group vehicles with local support.',
+  keywords: [
+    'kashmir cab service',
+    'srinagar taxi service',
+    'gulmarg taxi fare',
+    'pahalgam cab booking',
+    'tempo traveller kashmir',
+  ],
+  alternates: {
+    canonical: '/services',
   },
-  {
-    id: 2,
-    title: 'Gulmarg Gondola Ride Phase-1',
-    location: 'Gulmarg',
-    price: 2100,
-    duration: null,
-    rating: 5,
-    reviews: 1,
-    featured: false,
-  },
-  {
-    id: 3,
-    title: 'ATV Ride in Gulmarg',
-    location: 'Gulmarg',
-    price: 1000,
-    duration: '15 mins',
-    rating: 5,
-    reviews: 1,
-    featured: false,
-  },
-  {
-    id: 4,
-    title: 'Kashmir Heritage Tour',
-    location: 'Srinagar, Jammu and Kashmir',
-    price: 2500,
-    duration: '7hr+',
-    rating: 5,
-    reviews: 5,
-    featured: false,
-  },
-  {
-    id: 5,
-    title: 'Camping',
-    location: 'Naranaag, Kangan',
-    price: 1000,
-    originalPrice: 1200,
-    duration: null,
-    rating: 5,
-    reviews: 5,
-    featured: false,
-    discount: 200,
-  },
-  {
-    id: 6,
-    title: 'Pony ride in Kashmir',
-    location: 'Pahalgam, Jammu and Kashmir',
-    price: 3700,
-    duration: '2 hours',
-    rating: 5,
-    reviews: 5,
-    featured: false,
-  },
-  {
-    id: 7,
-    title: 'Great Lakes Trek',
-    location: 'Sonamarg, Jammu and Kashmir',
-    price: 16000,
-    duration: null,
-    rating: 5,
-    reviews: 4,
-    featured: false,
-  },
-  {
-    id: 8,
-    title: 'Ski Course',
-    location: 'Highlands Park, Gulmarg',
-    price: 3700,
-    duration: '7 Hours',
-    rating: 5,
-    reviews: 6,
-    featured: false,
-  },
-  {
-    id: 9,
-    title: 'Hot Air Balloon',
-    location: 'Zabarwan Park, Srinagar',
-    price: 1500,
-    duration: null,
-    rating: 5,
-    reviews: 5,
-    featured: false,
-  },
-  {
-    id: 10,
-    title: 'Paragliding',
-    location: 'Astanmarg, Jammu and Kashmir',
-    price: 4000,
-    duration: '3 hr',
-    rating: 5,
-    reviews: 5,
-    featured: false,
-  },
+}
+
+const addOnServices = [
+  'Airport pickup and drop',
+  'Hotel to hotel transfers',
+  'Multi-day circuit planning',
+  'Group tempo traveller support',
+  'Custom stopover sightseeing',
+  'Event and family trip transport',
 ]
 
 export default function ServicesPage() {
   return (
-    <div className="min-h-screen bg-white pt-20">
-      {/* Hero Section */}
-      <section className="relative py-16 bg-gradient-to-br from-blue-50 to-purple-50">
-        <div className="max-w-7xl mx-auto px-6">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 text-center">
-            Activities in Kashmir
-          </h1>
-          <p className="text-lg text-gray-600 text-center max-w-3xl mx-auto">
-            Experience the best of Kashmir with our curated adventure activities and tours
-          </p>
-        </div>
-      </section>
+    <main className="min-h-screen bg-[radial-gradient(circle_at_top,#143d5f_0%,#0b2b45_42%,#081d31_100%)] py-20">
+      <div className="section-wrap">
+        <header className="mb-10 overflow-hidden rounded-3xl border border-white/25 bg-white/10 text-white shadow-[0_24px_52px_rgba(2,12,26,0.42)] backdrop-blur-xl">
+          <div className="grid gap-6 p-8 md:p-12 lg:grid-cols-[1.2fr_0.8fr]">
+            <div>
+              <p className="mb-3 inline-flex rounded-full bg-white/15 px-4 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-100">
+                Kashmir Transport Desk
+              </p>
+              <h1 className="mb-4 text-4xl font-semibold leading-tight md:text-5xl">
+                Reliable Cab Services Across Kashmir
+              </h1>
+              <p className="max-w-4xl text-lg leading-relaxed text-slate-100/90">
+                Choose from hatchbacks, sedans, SUVs, luxury cars, and tempo travellers with local
+                drivers. Get route-based fares and full support for your Kashmir trip.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#02996f] to-[#1166a1] px-6 py-3 text-sm font-semibold text-white transition hover:brightness-105"
+                >
+                  Get Fare Quote
+                  <FiArrowRight />
+                </Link>
+                <Link
+                  href="/booking"
+                  className="inline-flex items-center rounded-full border border-white/35 bg-white/10 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/20"
+                >
+                  Build Full Travel Plan
+                </Link>
+              </div>
+            </div>
 
-      {/* Activities Grid */}
-      <section className="py-12">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-center justify-between mb-8">
-            <p className="text-gray-600">{activities.length} activities found</p>
+            <div className="relative min-h-[260px] overflow-hidden rounded-2xl border border-white/20 bg-slate-900">
+              <Image
+                src="/assets/services/hero-cab-bg.webp"
+                alt="Kashmir cab service fleet"
+                fill
+                sizes="(max-width: 1024px) 100vw, 520px"
+                className="object-cover"
+                priority
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#071a2e]/85 via-[#071a2e]/20 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 p-4">
+                <p className="text-sm uppercase tracking-[0.16em] text-cyan-100/90">
+                  Verified Local Fleet
+                </p>
+                <p className="mt-1 text-lg font-semibold text-white">
+                  Srinagar, Gulmarg, Pahalgam, Sonmarg routes
+                </p>
+              </div>
+            </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            {activities.map((activity) => (
+          <div className="grid gap-3 border-t border-white/15 bg-[#071b31]/45 px-8 py-5 text-sm text-slate-100 md:grid-cols-3 md:px-12">
+            <p>
+              <span className="font-semibold text-white">Category range:</span> INR 1,500 to INR
+              12,000 per day
+            </p>
+            <p>
+              <span className="font-semibold text-white">Fleet options:</span> Hatchback, Sedan,
+              SUV/MUV, Luxury, Tempo Traveller
+            </p>
+            <p>
+              <span className="font-semibold text-white">Support:</span> 24/7 planning desk and
+              route updates
+            </p>
+          </div>
+        </header>
+      </div>
+
+      <section className="rounded-[32px] bg-[linear-gradient(180deg,#e7f2f6_0%,#f4f7ef_55%,#e8f4ef_100%)] py-2">
+        <ServicesSection showHeader={false} />
+      </section>
+
+      <div className="section-wrap mt-10">
+        <section className="rounded-3xl border border-white/25 bg-white/10 p-7 text-white shadow-[0_24px_52px_rgba(2,12,26,0.42)] backdrop-blur-xl md:p-9">
+          <h2 className="mb-4 text-3xl font-semibold">Additional Service Support</h2>
+          <p className="mb-6 max-w-4xl text-slate-200/90">
+            Beyond fixed routes, our operations team can align transport with your hotel timings,
+            activity plans, and on-ground changes.
+          </p>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {addOnServices.map((item) => (
               <div
-                key={activity.id}
-                className="bg-white border border-gray-100 rounded-3xl overflow-hidden hover:shadow-lg transition-shadow"
+                key={item}
+                className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-slate-100"
               >
-                {/* Activity Image */}
-                <div className="relative h-64 bg-gradient-to-br from-blue-400 to-purple-500">
-                  {activity.featured && (
-                    <div className="absolute top-4 left-4 z-10">
-                      <span className="px-4 py-2 bg-red-600 text-white text-sm font-bold rounded-lg">
-                        Featured
-                      </span>
-                    </div>
-                  )}
-                  <div className="absolute inset-0 flex items-center justify-center text-white text-xl font-bold p-6 text-center">
-                    {activity.title}
-                  </div>
-                </div>
-
-                {/* Activity Details */}
-                <div className="p-6">
-                  <div className="flex items-start gap-2 text-gray-500 text-sm mb-3">
-                    <FiMapPin className="mt-1 flex-shrink-0" size={16} />
-                    <span className="line-clamp-2">{activity.location}</span>
-                  </div>
-
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">
-                    {activity.title}
-                  </h3>
-
-                  <div className="flex items-center gap-2 mb-4">
-                    <div className="flex items-center gap-1">
-                      <FiStar className="text-yellow-400 fill-yellow-400" size={16} />
-                      <span className="font-semibold text-gray-900">{activity.rating}</span>
-                    </div>
-                    <span className="text-gray-500 text-sm">({activity.reviews} Reviews)</span>
-                  </div>
-
-                  <div className="border-t pt-4 flex items-center justify-between">
-                    <div>
-                      {activity.discount && (
-                        <p className="text-sm text-gray-400 line-through">
-                          ₹{activity.originalPrice?.toLocaleString()}
-                        </p>
-                      )}
-                      <p className="text-sm text-gray-600 mb-1">From</p>
-                      <p className="text-2xl font-bold text-gray-900">
-                        ₹{activity.price.toLocaleString()}
-                      </p>
-                    </div>
-                    {activity.duration && (
-                      <div className="flex items-center gap-2 text-gray-500 text-sm">
-                        <FiClock size={16} />
-                        <span>{activity.duration}</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
+                <FiCheckCircle className="text-emerald-300" />
+                <span>{item}</span>
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Service Categories */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">
-            Other Services in Kashmir
-          </h2>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <div>
-              <h3 className="text-xl font-bold text-gray-900 mb-6">Cab Services</h3>
-              <ul className="space-y-3 text-gray-600">
-                <li>Etios Cab Service</li>
-                <li>Swift Dzire Cab Service</li>
-                <li>Innova Cab Service</li>
-                <li>Innova Crysta Service</li>
-                <li>Tavera Cab Service</li>
-                <li>Fortuner Cab Service</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-xl font-bold text-gray-900 mb-6">Bike Rental</h3>
-              <ul className="space-y-3 text-gray-600">
-                <li>Royal Enfield 350 Classic</li>
-                <li>Royal Enfield 500</li>
-                <li>Royal Enfield Himalayan</li>
-                <li>Scooty on rent</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-xl font-bold text-gray-900 mb-6">Popular Activities</h3>
-              <ul className="space-y-3 text-gray-600">
-                <li>Shikara Booking</li>
-                <li>Hot Air Balloon</li>
-                <li>Gulmarg Ski Packages</li>
-                <li>ATV Ride</li>
-                <li>Paragliding</li>
-                <li>Great Lakes Trek</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
+    </main>
   )
 }

@@ -26,7 +26,17 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid md:grid-cols-4 gap-10 mb-12">
           <div>
-            <h3 className="text-2xl font-bold mb-4 text-yellow-400">National Pride Travels</h3>
+            <div className="mb-4">
+              <p className="font-[family:var(--font-brand-accent)] text-[10px] font-semibold uppercase tracking-[0.42em] text-[#e4edf9]">
+                National Pride
+              </p>
+              <h3 className="font-[family:var(--font-display)] text-4xl font-semibold uppercase leading-[0.96] tracking-[0.08em] text-transparent [background-image:linear-gradient(112deg,#ffe8b8_6%,#f2c563_42%,#d9a33f_74%,#ffe7b7_98%)] bg-clip-text">
+                Travels
+              </h3>
+              <p className="mt-1 font-[family:var(--font-brand-accent)] text-[10px] font-medium uppercase tracking-[0.27em] text-cyan-100/90">
+                Time To Travel With Us
+              </p>
+            </div>
             <p className="text-gray-300 text-sm mb-4 leading-relaxed">
               National Pride Tour and Travel is a registered concern with the Directorate of
               Tourism, Government of Jammu and Kashmir, India.
@@ -55,18 +65,22 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-lg font-bold mb-4">Quick Links</h4>
+            <h4 className="mb-4 font-[family:var(--font-brand-accent)] text-lg font-semibold uppercase tracking-[0.18em] text-amber-100">
+              Quick Links
+            </h4>
             <ul className="space-y-2 text-sm text-gray-400">
               <li><Link href="/about" className="hover:text-white transition">About Us</Link></li>
               <li><Link href="/packages" className="hover:text-white transition">Kashmir Packages</Link></li>
-              <li><Link href="/services" className="hover:text-white transition">Activities</Link></li>
+              <li><Link href="/services" className="hover:text-white transition">Services</Link></li>
               <li><Link href="/packages?type=family" className="hover:text-white transition">Family Trips</Link></li>
               <li><Link href="/blog" className="hover:text-white transition">Blog</Link></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-lg font-bold mb-4">Popular Destinations</h4>
+            <h4 className="mb-4 font-[family:var(--font-brand-accent)] text-lg font-semibold uppercase tracking-[0.18em] text-amber-100">
+              Popular Destinations
+            </h4>
             <ul className="space-y-2 text-sm text-gray-400">
               <li><Link href="/destinations/srinagar" className="hover:text-white transition">Srinagar</Link></li>
               <li><Link href="/destinations/gulmarg" className="hover:text-white transition">Gulmarg</Link></li>
@@ -77,7 +91,9 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-lg font-bold mb-4">Contact Us</h4>
+            <h4 className="mb-4 font-[family:var(--font-brand-accent)] text-lg font-semibold uppercase tracking-[0.18em] text-amber-100">
+              Contact Us
+            </h4>
             <div className="space-y-4 text-sm text-gray-400">
               <div className="flex items-start gap-3">
                 <FiMapPin className="text-yellow-400 mt-1" size={16} />

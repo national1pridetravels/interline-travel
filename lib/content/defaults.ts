@@ -210,7 +210,7 @@ export const defaultPackageSeeds = [
 
 export const defaultSiteConfig = {
   brandName: 'National Pride Travels',
-  brandTagline: 'Time to travel with us',
+  brandTagline: 'Time To Travel With Us',
   phone: '+91 99064 69903',
   heroEyebrow: 'KASHMIR CURATED JOURNEYS',
   heroTitle: 'Discover the Paradise on Earth',

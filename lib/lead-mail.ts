@@ -23,11 +23,9 @@ function getLeadRecipients() {
     .map((entry) => entry.trim())
     .filter(Boolean)
 
-  if (parsed.length > 0) {
-    return parsed
-  }
-
-  return DEFAULT_LEAD_RECIPIENTS
+  const combined = [...DEFAULT_LEAD_RECIPIENTS, ...parsed]
+  const uniqueRecipients = [...new Set(combined)]
+  return uniqueRecipients
 }
 
 function getFromAddress() {

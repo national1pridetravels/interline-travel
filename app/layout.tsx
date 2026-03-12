@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Cormorant_Garamond, Manrope, Saira_Stencil_One } from 'next/font/google'
+import { Cormorant_Garamond, Jura, Manrope, Rajdhani } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/layout/Navbar'
 import type { NavbarDestination } from '@/components/layout/Navbar'
@@ -27,11 +27,18 @@ const cormorant = Cormorant_Garamond({
   weight: ['500', '600', '700'],
 })
 
-const brandFont = Saira_Stencil_One({
+const brandDisplay = Jura({
   subsets: ['latin'],
-  variable: '--font-brand',
+  variable: '--font-brand-display',
   display: 'swap',
-  weight: ['400'],
+  weight: ['500', '600'],
+})
+
+const brandAccent = Rajdhani({
+  subsets: ['latin'],
+  variable: '--font-brand-accent',
+  display: 'swap',
+  weight: ['500', '600'],
 })
 
 export const metadata: Metadata = {
@@ -106,7 +113,9 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${manrope.variable} ${cormorant.variable} ${brandFont.variable} antialiased`}>
+      <body
+        className={`${manrope.variable} ${cormorant.variable} ${brandDisplay.variable} ${brandAccent.variable} antialiased`}
+      >
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}

@@ -11,7 +11,9 @@
   --brand-deep: #0f3e6b;
   --font-sans: 'Manrope', 'Avenir Next', 'Nunito Sans', 'Segoe UI', sans-serif;
   --font-display: 'Cormorant Garamond', 'Iowan Old Style', 'Palatino Linotype', serif;
-  --font-brand: 'Saira Stencil One', 'Impact', 'Arial Black', sans-serif;
+  --font-brand-display: 'Jura', 'Century Gothic', 'Avenir Next', 'Trebuchet MS', sans-serif;
+  --font-brand-accent: 'Rajdhani', 'Avenir Next', 'Segoe UI', 'Trebuchet MS', sans-serif;
+  --font-brand: var(--font-brand-display);
 }
 
 @layer base {
@@ -64,6 +66,28 @@
   }
 }
 
+@keyframes brand-orbit {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.05);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes brand-shimmer {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
 @layer components {
   .section-wrap {
     @apply max-w-7xl mx-auto px-6;
@@ -88,6 +112,15 @@
   .float-soft-delay {
     animation: float-y 6.8s ease-in-out 0.7s infinite;
   }
+
+  .brand-orbit {
+    animation: brand-orbit 16s linear infinite;
+  }
+
+  .brand-heading-abstract {
+    background-size: 220% 220%;
+    animation: brand-shimmer 8s ease-in-out infinite;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -106,7 +139,9 @@
 
   .chip-glow,
   .float-soft,
-  .float-soft-delay {
+  .float-soft-delay,
+  .brand-orbit,
+  .brand-heading-abstract {
     animation: none !important;
   }
 }

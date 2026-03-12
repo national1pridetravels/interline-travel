@@ -10,8 +10,8 @@ import SmartVideoBackground from '@/components/ui/SmartVideoBackground'
 
 const navItems = [
   { href: '/packages', label: 'Packages By Season' },
+  { href: '/services', label: 'Services' },
   { href: '/about', label: 'About Us' },
-  { href: '/blog', label: 'Blog' },
   { href: '/contact', label: 'Contact Us' },
 ]
 
@@ -33,7 +33,7 @@ type NavbarProps = {
 
 const defaultSiteConfig: SiteConfig = {
   brandName: 'National Pride Travels',
-  brandTagline: 'Time to travel with us',
+  brandTagline: 'Time To Travel With Us',
   phone: '+91 99064 69903',
 }
 
@@ -139,29 +139,32 @@ export default function Navbar({
     <nav
       className={`fixed inset-x-0 top-0 z-50 border-b transition-all duration-300 ${
         scrolled
-          ? 'border-white/10 bg-[#08182a]/96 shadow-2xl backdrop-blur-2xl'
-          : 'border-white/10 bg-[linear-gradient(145deg,rgba(7,20,36,0.95),rgba(12,35,58,0.92))] shadow-[0_20px_45px_rgba(5,15,28,0.44)] backdrop-blur-xl'
+          ? 'border-white/20 bg-[#08182a]/80 shadow-2xl backdrop-blur-2xl'
+          : 'border-white/20 bg-[linear-gradient(145deg,rgba(7,20,36,0.8),rgba(12,35,58,0.8))] shadow-[0_20px_45px_rgba(5,15,28,0.4)] backdrop-blur-xl'
       }`}
     >
       <div className="mx-auto max-w-[1440px] px-4 lg:px-6">
         <div className="flex min-h-[108px] items-center gap-4 border-b border-white/15 lg:gap-6">
-          <Link href="/" className="flex min-w-0 items-center gap-3 lg:gap-4 xl:gap-5">
-            <div className="relative h-[88px] w-[88px] shrink-0 lg:h-[112px] lg:w-[112px] xl:h-[132px] xl:w-[132px]">
+          <Link href="/" className="group flex min-w-0 items-center gap-3 lg:gap-5">
+            <div className="relative h-[90px] w-[90px] shrink-0 overflow-hidden lg:h-[112px] lg:w-[112px] xl:h-[124px] xl:w-[124px]">
+              <div className="brand-orbit absolute -inset-0.5 rounded-[32%] bg-[conic-gradient(from_90deg,_rgba(56,189,248,0.42),rgba(250,204,21,0.52),rgba(16,185,129,0.44),rgba(56,189,248,0.42))] blur-[1px]" />
+              <div className="absolute inset-[1.5px] rounded-[30%] bg-[#06192f]/92 ring-1 ring-white/32 shadow-[0_16px_30px_rgba(0,0,0,0.45)]" />
+              <div className="absolute inset-[4.5px] rounded-[28%] bg-[radial-gradient(circle_at_20%_20%,rgba(14,165,233,0.26),transparent_52%),radial-gradient(circle_at_80%_80%,rgba(250,204,21,0.22),transparent_55%),#041223]" />
               <Image
                 src="/images/logo.png"
                 alt={siteConfig.brandName}
                 fill
-                sizes="(max-width: 1024px) 88px, (max-width: 1280px) 112px, 132px"
-                className="scale-[1.34] object-contain drop-shadow-[0_12px_20px_rgba(0,0,0,0.4)]"
+                sizes="(max-width: 1024px) 90px, (max-width: 1280px) 112px, 124px"
+                className="relative z-10 scale-[1.14] object-contain p-0.5 drop-shadow-[0_16px_24px_rgba(0,0,0,0.5)]"
                 priority
               />
             </div>
 
-            <div className="hidden min-w-0 sm:block">
-              <p className="truncate bg-gradient-to-r from-[#f8d56d] via-[#ffe18d] to-[#f3b74b] bg-clip-text font-[family:var(--font-brand)] text-[clamp(2.1rem,3.15vw,4rem)] leading-[0.95] text-transparent drop-shadow-[0_7px_14px_rgba(0,0,0,0.32)]">
+            <div className="hidden min-w-0 max-w-[40vw] sm:block lg:max-w-[31vw] 2xl:max-w-none">
+              <p className="truncate font-[family:var(--font-brand-display)] text-[clamp(1.35rem,1.95vw,2.45rem)] font-semibold leading-[0.98] tracking-[0.028em] text-transparent [background-image:linear-gradient(112deg,#ffe3a1_4%,#f2c75f_42%,#ddab3d_74%,#ffe2a6_98%)] bg-clip-text [text-shadow:0_6px_20px_rgba(0,0,0,0.4)] transition duration-500 group-hover:brightness-110">
                 {siteConfig.brandName}
               </p>
-              <p className="mt-1 font-[family:var(--font-brand)] text-[11px] uppercase tracking-[0.28em] text-cyan-100/95 lg:text-[13px]">
+              <p className="mt-1 font-[family:var(--font-brand-accent)] text-[9px] font-semibold uppercase tracking-[0.26em] text-[#d4e5fb] sm:text-[10px] lg:text-[11px]">
                 {siteConfig.brandTagline}
               </p>
             </div>
@@ -172,7 +175,7 @@ export default function Navbar({
               event.preventDefault()
               runSearch(desktopSearch)
             }}
-            className="hidden min-w-[340px] flex-1 items-center gap-2 rounded-full border border-white/35 bg-white/95 p-1.5 shadow-[0_16px_32px_rgba(9,27,43,0.15)] lg:flex"
+            className="hidden min-w-[250px] flex-1 items-center gap-2 rounded-full border border-white/35 bg-white/95 p-1.5 shadow-[0_16px_32px_rgba(9,27,43,0.15)] lg:flex xl:min-w-[340px]"
           >
             <FiSearch className="ml-2 text-slate-500" />
             <input
@@ -199,7 +202,7 @@ export default function Navbar({
 
           <a
             href={`tel:${siteConfig.phone.replace(/[^\d+]/g, '')}`}
-            className="hidden shrink-0 lg:inline-flex rounded-full bg-gradient-to-r from-[#d8e25a] to-[#b9d544] px-6 py-3.5 text-[17px] font-bold text-slate-900 shadow-lg transition hover:brightness-95"
+            className="hidden shrink-0 xl:inline-flex rounded-full bg-gradient-to-r from-[#d8e25a] to-[#b9d544] px-6 py-3.5 text-[17px] font-bold text-slate-900 shadow-lg transition hover:brightness-95"
           >
             {siteConfig.phone}
           </a>
