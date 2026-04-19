@@ -92,33 +92,30 @@ export default async function HomePage() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
         />
 
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,#e6f3f7_0%,#f7f8ef_42%,#eaf6f2_100%)]" />
-          <div className="float-soft absolute -top-36 left-[-7rem] hidden h-[420px] w-[420px] rounded-full bg-cyan-200/45 blur-[110px] md:block" />
-          <div className="float-soft-delay absolute top-[34%] right-[-6rem] hidden h-[390px] w-[390px] rounded-full bg-emerald-200/45 blur-[110px] md:block" />
-          <div className="float-soft absolute bottom-20 left-[14%] h-[220px] w-[220px] rounded-full bg-sky-300/30 blur-[72px] md:h-[300px] md:w-[300px] md:blur-[90px]" />
-          <div className="float-soft-delay absolute bottom-0 right-[20%] h-[200px] w-[200px] rounded-full bg-lime-200/35 blur-[68px] md:h-[270px] md:w-[270px] md:blur-[95px]" />
-        </div>
-
         <div className="relative z-10">
           <HeroSection heroConfig={heroConfig} />
-          <section className="relative z-20 mt-4 px-6 pb-6">
+          <section className="relative z-20 -mt-10 px-4 pb-6 sm:-mt-12 sm:px-6">
             <div className="mx-auto max-w-7xl">
               <SearchBooking destinations={destinations} />
             </div>
           </section>
           <TrustBar />
-          <div className="relative space-y-2 pb-10">
-            <PopularDestinations items={featuredDestinations} />
-            <KashmirHighlights highlights={highlightDestinations} />
-            <Packages packages={packages} />
-            <AdventureActivities />
-            <WhyChooseUs />
-            <KashmirFaq />
-            <Testimonials />
+          <div className="relative space-y-0 pb-10">
+            <section className="bg-gradient-to-b from-white to-slate-50/90">
+              <PopularDestinations items={featuredDestinations} />
+              <KashmirHighlights highlights={highlightDestinations} />
+              <Packages packages={packages} />
+            </section>
+
+            <section className="bg-gradient-to-b from-slate-50 via-white to-slate-50/80">
+              <AdventureActivities />
+              <WhyChooseUs />
+              <KashmirFaq />
+              <Testimonials />
+            </section>
           </div>
 
-          <section className="bg-gradient-to-r from-[#0f3f69] via-[#0f6a73] to-[#138b65]">
+          <section className="bg-[radial-gradient(circle_at_top,rgba(229,34,62,0.3),transparent_30%),linear-gradient(135deg,#111827_0%,#1f2937_52%,#7f1d1d_100%)]">
             <Newsletter />
           </section>
         </div>

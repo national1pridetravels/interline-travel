@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Cormorant_Garamond, Jura, Manrope, Rajdhani } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
 import Navbar from '@/components/layout/Navbar'
 import type { NavbarDestination } from '@/components/layout/Navbar'
@@ -40,6 +41,8 @@ const brandAccent = Rajdhani({
   display: 'swap',
   weight: ['500', '600'],
 })
+
+const googleAnalyticsId = 'G-FE5VN93SRS'
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -113,6 +116,20 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${googleAnalyticsId}');
+          `}
+        </Script>
+      </head>
       <body
         className={`${manrope.variable} ${cormorant.variable} ${brandDisplay.variable} ${brandAccent.variable} antialiased`}
       >
@@ -128,7 +145,7 @@ export default async function RootLayout({
             phone: siteConfig.phone,
           }}
         />
-        <div className="pt-[108px] lg:pt-[176px]">{children}</div>
+        <div>{children}</div>
         <WhatsAppFloat />
       </body>
     </html>

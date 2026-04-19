@@ -8,10 +8,10 @@ const posts = [
 
 export default function BlogPage() {
   return (
-    <main className="min-h-screen bg-gray-50 py-24">
+    <main className="page-shell-dark py-24">
       <div className="max-w-5xl mx-auto px-6">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">Travel Blog</h1>
-        <p className="text-gray-600 mb-10">
+        <h1 className="text-4xl font-bold text-white mb-4">Travel Blog</h1>
+        <p className="text-slate-200/90 mb-10">
           Insights, guides, and tips for planning your Kashmir journey.
         </p>
 
@@ -20,7 +20,7 @@ export default function BlogPage() {
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}
-              className="block bg-white rounded-2xl p-6 shadow hover:shadow-lg transition"
+              className="page-panel-light block rounded-2xl p-6 transition hover:-translate-y-1"
             >
               <h2 className="text-xl font-semibold text-gray-900">{post.title}</h2>
               <p className="text-sm text-gray-500 mt-3">Read article</p>

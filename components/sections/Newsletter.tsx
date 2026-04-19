@@ -50,10 +50,10 @@ export default function Newsletter() {
   return (
     <section className="py-20">
       <div className="mx-auto max-w-4xl px-6 text-center">
-        <h2 className="mb-6 text-4xl font-semibold text-white md:text-5xl">
+        <h2 className="mb-6 text-3xl font-semibold text-white sm:text-4xl md:text-5xl">
           Stay Updated
         </h2>
-        <p className="mb-10 text-xl leading-relaxed text-cyan-100">
+        <p className="mb-10 text-xl leading-relaxed text-rose-100">
           Subscribe to get special offers, travel tips, and Kashmir updates
         </p>
 
@@ -69,7 +69,7 @@ export default function Newsletter() {
           <button
             type="submit"
             disabled={submitting}
-            className="rounded-full bg-white px-10 py-4 font-semibold text-cyan-700 shadow-xl transition-all duration-300 hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-70"
+            className="rounded-full bg-white px-10 py-4 font-semibold text-red-700 shadow-xl transition-all duration-300 hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-70"
           >
             {submitting ? 'Submitting...' : 'Subscribe'}
           </button>
@@ -79,7 +79,7 @@ export default function Newsletter() {
           <p
             className={`mx-auto mt-5 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium ${
               message.type === 'success'
-                ? 'bg-emerald-100 text-emerald-800'
+                ? 'bg-red-50 text-red-700'
                 : 'bg-rose-100 text-rose-800'
             }`}
           >

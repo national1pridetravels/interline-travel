@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { FiArrowRight, FiMapPin } from 'react-icons/fi'
 import SmartVideoBackground from '@/components/ui/SmartVideoBackground'
 
 export type HeroConfig = {
@@ -18,111 +19,102 @@ type HeroSectionProps = {
   heroConfig?: HeroConfig
 }
 
+const proofCards = [
+  {
+    label: 'Signature Route',
+    value: 'Srinagar · Gulmarg · Pahalgam',
+  },
+  {
+    label: 'Registered Support',
+    value: 'Licensed local planners with 24/7 assistance',
+  },
+  {
+    label: 'Best Window',
+    value: 'Season-wise departures across winter, spring, summer, and autumn',
+  },
+]
+
 export default function HeroSection({ heroConfig = defaultHeroConfig }: HeroSectionProps) {
-
   return (
-    <section className="relative min-h-[calc(100svh-104px)] w-full overflow-hidden lg:min-h-[calc(100svh-176px)]">
-      <SmartVideoBackground
-        src="/assets/media/hero-legacy.mp4"
-        poster="/assets/destinations/srinagar.jpg"
-        preload="metadata"
-        disableOnMobile={false}
-        forceVideo
-        className="absolute inset-0 h-full w-full object-cover"
-      />
+    <section className="relative overflow-hidden bg-[radial-gradient(circle_at_15%_-5%,rgba(229,34,62,0.28),transparent_40%),radial-gradient(circle_at_85%_15%,rgba(248,113,113,0.16),transparent_30%),linear-gradient(135deg,#111827_0%,#1f2937_55%,#374151_100%)] text-white">
+      <div className="absolute -top-28 right-[-5rem] h-72 w-72 rounded-full bg-red-500/15 blur-3xl" aria-hidden="true" />
+      <div className="absolute bottom-[-6rem] left-[-3rem] h-80 w-80 rounded-full bg-rose-400/12 blur-3xl" aria-hidden="true" />
 
-      <div className="absolute inset-0 bg-gradient-to-b from-[#041523]/70 via-[#071926]/55 to-[#081b24]/75" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(73,163,154,0.3),transparent_48%),radial-gradient(circle_at_bottom_right,rgba(170,196,118,0.22),transparent_42%)]" />
+      <div className="section-space section-wrap relative z-10">
+        <div className="grid gap-12 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
+          <div className="section-header">
+            <div className="chip-3d-dark mb-6">{heroConfig.heroEyebrow}</div>
+            <h1 className="hero-display mb-6 max-w-[11ch]">
+              {heroConfig.heroTitle}
+            </h1>
+            <p className="hero-copy mb-8 text-slate-200">
+              {heroConfig.heroSubtitle} National Pride Travels plans each journey around road
+              access, comfort level, and your preferred season.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <Link href="/packages" className="button-3d-primary">
+                Explore Packages
+              </Link>
+              <Link href="/contact" className="button-3d-light">
+                Speak With Our Team
+              </Link>
+            </div>
+          </div>
 
-      <div className="relative z-10 flex h-full items-center px-6 pb-16 pt-16 md:pt-20 text-white">
-        <div className="section-wrap w-full">
-          <div className="grid gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:items-end">
-            <div className="max-w-4xl">
-              <p className="mb-5 inline-flex items-center rounded-full border border-white/35 bg-white/15 px-4 py-2 text-xs font-semibold tracking-[0.2em] uppercase">
-                {heroConfig.heroEyebrow}
-              </p>
-              <h1 className="mb-6 text-4xl font-semibold leading-[1.02] md:text-6xl lg:text-7xl">
-                {heroConfig.heroTitle}
-              </h1>
-              <p className="mb-10 max-w-2xl text-base leading-relaxed text-slate-100/95 md:text-xl">
-                {heroConfig.heroSubtitle} Explore trusted Kashmir tour and travel planning with
-                registered local experts.
-              </p>
+          <div className="image-stage">
+            <div className="image-frame-3d image-tilt-right image-float relative h-[22rem] rounded-[2rem] ring-1 ring-white/15 sm:h-[26rem] lg:h-[32rem]">
+              <SmartVideoBackground
+                src="/assets/media/hero-legacy.mp4"
+                poster="/assets/destinations/srinagar.jpg"
+                preload="metadata"
+                disableOnMobile={false}
+                forceVideo
+                className="image-depth h-full w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#061120]/78 via-transparent to-white/10" />
 
-              <div className="mb-12 flex flex-wrap items-center gap-4">
-                <Link
-                  href="/packages"
-                  className="chip-glow inline-flex items-center rounded-full bg-emerald-500 px-8 py-4 text-sm font-semibold text-white transition hover:bg-emerald-600"
-                >
-                  Explore Packages
-                </Link>
-                <Link
-                  href="/destinations"
-                  className="inline-flex items-center rounded-full border border-white/55 bg-white/15 px-8 py-4 text-sm font-semibold text-white transition hover:bg-white/25"
-                >
-                  Browse Destinations
-                </Link>
+              <div className="image-badge-3d absolute left-4 top-4 rounded-2xl border border-white/15 bg-slate-950/45 px-4 py-3 text-white sm:left-6 sm:top-6">
+                <p className="text-[11px] uppercase tracking-[0.18em] text-rose-100/85">
+                  Valley Preview
+                </p>
+                <p className="mt-1 text-sm font-semibold">Aerial routes, lakes, meadows, and alpine stays</p>
               </div>
 
-              <div className="grid gap-3 sm:grid-cols-3">
-                <div className="rounded-2xl border border-white/30 bg-black/20 p-4 backdrop-blur-sm">
-                  <p className="mb-1 text-xs uppercase tracking-wider text-slate-200/80">
-                    Signature Route
-                  </p>
-                  <p className="text-sm font-semibold">Srinagar - Gulmarg - Pahalgam</p>
-                </div>
-                <div className="rounded-2xl border border-white/30 bg-black/20 p-4 backdrop-blur-sm">
-                  <p className="mb-1 text-xs uppercase tracking-wider text-slate-200/80">
-                    Curated Support
-                  </p>
-                  <p className="text-sm font-semibold">Hotels, transfers, and local experts</p>
-                </div>
-                <div className="rounded-2xl border border-white/30 bg-black/20 p-4 backdrop-blur-sm">
-                  <p className="mb-1 text-xs uppercase tracking-wider text-slate-200/80">
-                    Best Time
-                  </p>
-                  <p className="text-sm font-semibold">April to October for valley tours</p>
+              <div className="image-badge-3d absolute bottom-4 left-4 right-4 rounded-[1.5rem] border border-white/12 bg-slate-950/55 p-4 text-white sm:bottom-6 sm:left-6 sm:right-6 sm:p-5">
+                <div className="flex items-start gap-3">
+                  <div className="icon-orb-3d h-11 w-11 shrink-0 rounded-xl">
+                    <FiMapPin className="text-lg" />
+                  </div>
+                  <div>
+                    <p className="text-[11px] uppercase tracking-[0.18em] text-rose-100/85">
+                      Travel Ready
+                    </p>
+                    <p className="mt-1 text-base font-semibold">Curated stays, airport transfers, and day-by-day route planning</p>
+                    <Link
+                      href="/destinations"
+                      className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-[var(--brand-gold-soft)]"
+                    >
+                      Browse all destinations
+                      <FiArrowRight className="h-4 w-4" />
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
-
-            <aside className="hidden gap-4 lg:grid">
-              <article className="float-soft rounded-3xl border border-white/35 bg-white/15 p-6 backdrop-blur-xl">
-                <p className="text-xs uppercase tracking-[0.2em] text-cyan-100/90">Kashmir Focus</p>
-                <h2 className="mt-2 text-3xl font-semibold leading-tight text-white">
-                  Season-Wise Itineraries Built For Real Travel Days
-                </h2>
-                <p className="mt-3 text-sm text-slate-100/90">
-                  Every plan is customized by weather, road conditions, and your comfort level.
-                </p>
-              </article>
-              <div className="grid grid-cols-2 gap-4">
-                <article className="float-soft-delay rounded-2xl border border-white/30 bg-black/30 p-4 backdrop-blur-sm">
-                  <p className="text-[11px] uppercase tracking-[0.16em] text-slate-200/80">
-                    Support
-                  </p>
-                  <p className="mt-1 text-xl font-semibold">24/7</p>
-                </article>
-                <article className="float-soft rounded-2xl border border-white/30 bg-black/30 p-4 backdrop-blur-sm">
-                  <p className="text-[11px] uppercase tracking-[0.16em] text-slate-200/80">
-                    Registered
-                  </p>
-                  <p className="mt-1 text-xl font-semibold">JKAE00005259</p>
-                </article>
-              </div>
-            </aside>
           </div>
         </div>
-      </div>
 
-      <div className="pointer-events-none absolute bottom-8 left-1/2 z-10 -translate-x-1/2">
-        <div className="flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-xs font-medium text-white/90">
-          <span className="inline-block h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-          Scroll to explore top Kashmir tours
+        <div className="mt-10 grid gap-5 md:grid-cols-3">
+          {proofCards.map((item) => (
+            <article key={item.label} className="surface-3d-dark rounded-[1.75rem] p-5 text-white">
+              <p className="metric-label text-rose-100/75">{item.label}</p>
+              <p className="mt-3 text-base font-semibold leading-relaxed text-slate-50">
+                {item.value}
+              </p>
+            </article>
+          ))}
         </div>
       </div>
-
-      <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-[#eef4f7] to-transparent" />
     </section>
   )
 }

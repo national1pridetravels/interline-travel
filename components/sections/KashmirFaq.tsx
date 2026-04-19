@@ -5,7 +5,7 @@ export default function KashmirFaq() {
     <section className="py-20">
       <div className="section-wrap">
         <div className="mb-10 text-center">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-teal-700">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-red-700">
             Kashmir Travel FAQs
           </p>
           <h2 className="headline-main font-semibold mb-3">
@@ -23,7 +23,7 @@ export default function KashmirFaq() {
               className="group rounded-2xl border border-slate-200 bg-white/85 p-5 shadow-[0_10px_24px_rgba(15,35,58,0.12)]"
             >
               <summary className="cursor-pointer list-none text-lg font-semibold text-slate-900">
-                <span className="inline-block transition group-open:text-teal-700">
+                <span className="inline-block transition group-open:text-red-700">
                   {faq.question}
                 </span>
               </summary>

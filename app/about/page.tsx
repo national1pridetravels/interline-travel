@@ -62,13 +62,13 @@ const socialLinks = [
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-[radial-gradient(circle_at_top,#133f61_0%,#0a2944_42%,#081d31_100%)] py-20 text-white">
+    <main className="page-shell-dark py-20">
       <div className="mx-auto max-w-6xl px-6">
-        <header className="mb-10 rounded-3xl border border-white/25 bg-white/10 p-8 shadow-[0_24px_52px_rgba(2,12,26,0.44)] backdrop-blur-xl md:p-12">
-          <p className="mb-3 inline-flex rounded-full bg-white/20 px-4 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-cyan-100">
+        <header className="page-panel-dark mb-10 rounded-3xl p-8 md:p-12">
+          <p className="chip-3d-dark mb-4">
             About National Pride Travels
           </p>
-          <h1 className="mb-4 text-4xl font-semibold text-white md:text-5xl">
+          <h1 className="mb-4 text-3xl font-semibold text-white sm:text-4xl md:text-5xl">
             Registered Kashmir Tour Company with Full Local Support
           </h1>
           <p className="max-w-4xl text-lg leading-relaxed text-slate-100/90">
@@ -79,7 +79,7 @@ export default function AboutPage() {
         </header>
 
         <section className="mb-10 grid gap-6 lg:grid-cols-2">
-          <article className="rounded-3xl border border-white/25 bg-white/10 p-7 shadow-[0_24px_52px_rgba(2,12,26,0.4)] backdrop-blur-xl">
+          <article className="page-panel-dark rounded-3xl p-7">
             <h2 className="mb-5 text-2xl font-semibold text-white">Registration and Tax Details</h2>
             <div className="space-y-4 text-slate-100">
               <p>
@@ -100,36 +100,38 @@ export default function AboutPage() {
             </div>
           </article>
 
-          <article className="rounded-3xl border border-white/25 bg-white/10 p-7 shadow-[0_24px_52px_rgba(2,12,26,0.4)] backdrop-blur-xl">
+          <article className="page-panel-dark rounded-3xl p-7">
             <h2 className="mb-5 text-2xl font-semibold text-white">24/7 Contact and Location</h2>
             <div className="space-y-4 text-slate-100">
               <p className="flex items-center gap-3">
-                <FiPhoneCall className="text-emerald-600" />
-                <a href="tel:+919906469903" className="font-semibold text-white hover:text-emerald-200">
+                <FiPhoneCall className="text-[var(--brand-gold)]" />
+                <a href="tel:+919906469903" className="font-semibold text-white hover:text-[var(--brand-gold-soft)]">
                   +91-9906469903
                 </a>
               </p>
               <p className="flex items-center gap-3">
-                <FiMessageCircle className="text-emerald-600" />
+                <FiMessageCircle className="text-[var(--brand-gold)]" />
                 <a
-                  href="#whatsapp-chat"
-                  className="font-semibold text-white hover:text-emerald-200"
+                  href="https://wa.me/919906469903?text=Hello%20National%20Pride%20Travels%2C%20I%20want%20to%20plan%20a%20Kashmir%20tour."
+                  target="_blank"
+                  rel="noreferrer"
+                  className="font-semibold text-white hover:text-[var(--brand-gold-soft)]"
                 >
-                  WhatsApp Chatbot
+                  WhatsApp Support
                 </a>
               </p>
               <p>
                 <span className="font-semibold text-white">Email:</span>{' '}
-                <a href="mailto:info@nationalpridetravels.com" className="hover:text-emerald-200">
+                <a href="mailto:info@nationalpridetravels.com" className="hover:text-[var(--brand-gold-soft)]">
                   info@nationalpridetravels.com
                 </a>
                 {' · '}
-                <a href="mailto:nationalpridetravels@gmail.com" className="hover:text-emerald-200">
+                <a href="mailto:nationalpridetravels@gmail.com" className="hover:text-[var(--brand-gold-soft)]">
                   nationalpridetravels@gmail.com
                 </a>
               </p>
               <p className="flex items-start gap-3">
-                <FiMapPin className="mt-1 text-emerald-600" />
+                <FiMapPin className="mt-1 text-[var(--brand-gold)]" />
                 <span>
                   MACHOWA BAGHI MEHTAB, SRINAGAR, JAMMU AND KASHMIR, INDIA - 190015
                 </span>
@@ -147,15 +149,15 @@ export default function AboutPage() {
           </article>
         </section>
 
-        <section className="mb-10 rounded-3xl border border-white/25 bg-white/10 p-7 shadow-[0_24px_52px_rgba(2,12,26,0.4)] backdrop-blur-xl md:p-10">
+        <section className="page-panel-dark mb-10 rounded-3xl p-7 md:p-10">
           <h2 className="mb-6 text-3xl font-semibold text-white">Our Achievements</h2>
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {achievements.map((item) => (
               <article
                 key={item.title}
-                className="rounded-2xl border border-white/25 bg-white/10 p-5 shadow-[0_18px_30px_rgba(2,12,26,0.35)]"
+                className="rounded-2xl border border-white/15 bg-white/8 p-5 shadow-[0_18px_30px_rgba(2,12,26,0.35)]"
               >
-                <div className="mb-3 inline-flex h-11 w-11 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
+                <div className="icon-orb-3d mb-3 inline-flex h-11 w-11 items-center justify-center rounded-full">
                   <FiAward size={18} />
                 </div>
                 <p className="text-3xl font-semibold text-white">{item.value}</p>
@@ -166,7 +168,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="rounded-3xl border border-white/25 bg-white/10 p-7 shadow-[0_24px_52px_rgba(2,12,26,0.4)] backdrop-blur-xl md:p-10">
+        <section className="page-panel-dark rounded-3xl p-7 md:p-10">
           <h2 className="mb-4 text-3xl font-semibold text-white">Connect With National Pride Travels</h2>
           <p className="mb-6 max-w-4xl text-slate-200/90">
             Follow us on social channels, connect on WhatsApp, and check our Google profile for
@@ -180,7 +182,7 @@ export default function AboutPage() {
                 href={href}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center justify-between rounded-2xl border border-white/25 bg-white/10 px-4 py-3 text-sm font-semibold text-white transition hover:border-emerald-300/70 hover:bg-emerald-500/20"
+                className="inline-flex items-center justify-between rounded-2xl border border-white/18 bg-white/8 px-4 py-3 text-sm font-semibold text-white transition hover:border-[var(--brand-gold)]/70 hover:bg-white/14"
               >
                 <span className="inline-flex items-center gap-2">
                   <Icon />
@@ -194,13 +196,13 @@ export default function AboutPage() {
           <div className="flex flex-wrap gap-4">
             <Link
               href="/packages"
-              className="inline-flex rounded-full bg-gradient-to-r from-emerald-500 to-teal-600 px-6 py-3 font-semibold text-white transition hover:from-emerald-600 hover:to-teal-700"
+              className="button-3d-primary"
             >
               Explore Packages
             </Link>
             <Link
               href="/contact"
-              className="inline-flex rounded-full border border-white/35 bg-white/10 px-6 py-3 font-semibold text-white transition hover:bg-white/20"
+              className="button-3d-light"
             >
               Contact Us
             </Link>

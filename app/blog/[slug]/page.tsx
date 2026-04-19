@@ -7,8 +7,8 @@ export default function BlogPost({ params }: Props) {
   const { slug } = params
   
   return (
-    <main className="max-w-4xl mx-auto px-4 py-24">
-      <article>
+    <main className="page-shell-dark py-24">
+      <article className="page-panel-light mx-auto max-w-4xl rounded-3xl px-6 py-10 sm:px-8">
         <header className="mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
             Kashmir Travel Guide - {slug.replace(/-/g, ' ').toUpperCase()}
@@ -31,7 +31,7 @@ export default function BlogPost({ params }: Props) {
             and comfortable transportation throughout your journey.
           </p>
           
-          <div className="bg-blue-50 p-6 rounded-xl mt-8">
+          <div className="rounded-xl bg-red-50 p-6 mt-8">
             <h3 className="font-bold text-lg mb-2">Ready to Book?</h3>
             <p>Contact us for the best Kashmir tour packages at pocket-friendly prices.</p>
           </div>

@@ -101,22 +101,22 @@ export default async function PackageDetailPage({
         }
 
   return (
-    <main className="min-h-screen bg-gray-50 py-24">
+    <main className="page-shell-dark py-24">
       <div className="max-w-4xl mx-auto px-6">
-        <div className="bg-white rounded-2xl shadow p-8">
+        <div className="page-panel-light rounded-2xl p-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">{data.title}</h1>
           <p className="text-gray-700 mb-8">{data.summary}</p>
 
           <div className="grid sm:grid-cols-3 gap-4 mb-8">
-            <div className="p-4 bg-gray-50 rounded-lg">
+            <div className="surface-3d rounded-lg p-4">
               <p className="text-xs text-gray-500 mb-1">Duration</p>
               <p className="font-semibold text-gray-900">{data.duration}</p>
             </div>
-            <div className="p-4 bg-gray-50 rounded-lg">
+            <div className="surface-3d rounded-lg p-4">
               <p className="text-xs text-gray-500 mb-1">Starting Price</p>
               <p className="font-semibold text-gray-900">{data.priceFrom}</p>
             </div>
-            <div className="p-4 bg-gray-50 rounded-lg">
+            <div className="surface-3d rounded-lg p-4">
               <p className="text-xs text-gray-500 mb-1">Ideal For</p>
               <p className="font-semibold text-gray-900">{data.idealFor}</p>
             </div>
@@ -130,10 +130,10 @@ export default async function PackageDetailPage({
           </ul>
 
           <div className="flex flex-wrap gap-4">
-            <Link href="/booking" className="px-6 py-3 bg-gray-900 text-white rounded-lg">
+            <Link href="/booking" className="button-3d-primary rounded-lg px-6 py-3">
               Book Now
             </Link>
-            <Link href="/contact" className="px-6 py-3 border border-gray-300 rounded-lg text-gray-900">
+            <Link href="/contact" className="button-3d-secondary rounded-lg px-6 py-3">
               Talk To Expert
             </Link>
           </div>

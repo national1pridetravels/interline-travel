@@ -17,14 +17,14 @@ export default function KashmirHighlights({
 }: KashmirHighlightsProps) {
 
   return (
-    <section className="py-20">
+    <section className="py-14 sm:py-20">
       <div className="section-wrap">
-        <div className="glass-panel p-10 md:p-12">
-          <div className="text-center mb-12">
+        <div className="glass-panel p-6 sm:p-8 md:p-12">
+          <div className="text-center mb-8 sm:mb-12">
             <h2 className="headline-main font-semibold mb-3">
               Kashmir Highlights and Hidden Gems
             </h2>
-            <p className="text-lg text-slate-600">
+            <p className="text-base text-slate-600 sm:text-lg">
               Distinct routes for nature, pilgrimage, and offbeat discovery.
             </p>
           </div>

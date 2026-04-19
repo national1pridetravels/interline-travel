@@ -61,9 +61,11 @@ export default async function PackagesPage({
         )
 
   return (
-    <main className="min-h-screen bg-[radial-gradient(circle_at_top,#133f61_0%,#0a2944_42%,#081d31_100%)] py-24 text-white">
+    <main className="page-shell-dark py-24">
       <div className="max-w-7xl mx-auto px-6">
-        <h1 className="mb-3 text-4xl font-bold text-white">Kashmir Packages By Season</h1>
+        <h1 className="mb-3 text-3xl font-bold text-white sm:text-4xl">
+          Kashmir Packages By Season
+        </h1>
         <p className="mb-8 text-slate-200/90">
           {selectedType === 'all'
             ? 'Explore weather-based itineraries for winter, spring, summer, and autumn in Kashmir.'
@@ -97,9 +99,9 @@ export default async function PackagesPage({
         </div>
 
         {filteredPackages.length === 0 && (
-          <div className="mb-8 rounded-xl border border-white/30 bg-white/10 p-6 backdrop-blur-lg">
+          <div className="page-panel-dark mb-8 rounded-xl p-6">
             <p className="mb-4 text-slate-100">No packages found for this filter.</p>
-            <Link href="/packages" className="font-medium text-cyan-100 hover:text-white">
+            <Link href="/packages" className="font-medium text-[var(--brand-gold-soft)] hover:text-white">
               View all packages
             </Link>
           </div>
@@ -110,14 +112,14 @@ export default async function PackagesPage({
             <Link
               key={pkg.slug}
               href={`/packages/${pkg.slug}`}
-              className="block overflow-hidden rounded-2xl border border-white/25 bg-white/10 shadow-[0_24px_42px_rgba(2,12,26,0.4)] backdrop-blur-xl transition hover:-translate-y-1 hover:bg-white/15"
+              className="page-panel-dark block overflow-hidden rounded-2xl transition hover:-translate-y-1"
             >
               <div className="relative h-52">
                 <Image src={pkg.image} alt={pkg.title} fill className="object-cover" />
               </div>
               <div className="p-5">
                 <h2 className="mb-2 text-xl font-semibold text-white">{pkg.title}</h2>
-                <p className="text-sm text-cyan-100">
+                <p className="text-sm text-[var(--brand-gold-soft)]">
                   Season: {typeLabels[pkg.season] || pkg.season}
                 </p>
                 {pkg.summary && (

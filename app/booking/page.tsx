@@ -70,9 +70,9 @@ export default function BookingPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[radial-gradient(circle_at_top,#133f61_0%,#0a2944_42%,#081d31_100%)] py-24 text-white">
+    <main className="page-shell-dark py-24">
       <div className="mx-auto max-w-3xl px-4">
-        <h1 className="mb-4 text-center text-4xl font-bold text-white md:text-5xl">
+        <h1 className="mb-4 text-center text-3xl font-bold text-white sm:text-4xl md:text-5xl">
           Reserve Your Kashmir Journey
         </h1>
         <p className="mx-auto mb-10 max-w-2xl text-center text-slate-200/90">
@@ -80,7 +80,7 @@ export default function BookingPage() {
           transport plan by call and email.
         </p>
 
-        <div className="rounded-[28px] border border-white/25 bg-white/10 p-8 shadow-[0_28px_62px_rgba(2,12,26,0.45)] backdrop-blur-xl">
+        <div className="page-panel-dark rounded-[28px] p-8">
           <form onSubmit={handleSubmit} className="space-y-5">
             <input
               type="text"
@@ -89,7 +89,7 @@ export default function BookingPage() {
               onChange={(event) =>
                 setFormData((current) => ({ ...current, name: event.target.value }))
               }
-              className="w-full rounded-xl border border-white/30 bg-white/95 p-3 text-slate-900"
+              className="field-3d"
               required
             />
 
@@ -101,7 +101,7 @@ export default function BookingPage() {
                 onChange={(event) =>
                   setFormData((current) => ({ ...current, email: event.target.value }))
                 }
-                className="w-full rounded-xl border border-white/30 bg-white/95 p-3 text-slate-900"
+                className="field-3d"
                 required
               />
               <input
@@ -111,7 +111,7 @@ export default function BookingPage() {
                 onChange={(event) =>
                   setFormData((current) => ({ ...current, phone: event.target.value }))
                 }
-                className="w-full rounded-xl border border-white/30 bg-white/95 p-3 text-slate-900"
+                className="field-3d"
                 required
               />
             </div>
@@ -122,7 +122,7 @@ export default function BookingPage() {
                 onChange={(event) =>
                   setFormData((current) => ({ ...current, package: event.target.value }))
                 }
-                className="w-full rounded-xl border border-white/30 bg-white/95 p-3 text-slate-900"
+                className="field-3d"
               >
                 <option>Kashmir Signature Circuit</option>
                 <option>Winter Kashmir Escape</option>
@@ -141,7 +141,7 @@ export default function BookingPage() {
                     travelers: Number(event.target.value),
                   }))
                 }
-                className="w-full rounded-xl border border-white/30 bg-white/95 p-3 text-slate-900"
+                className="field-3d"
                 required
               />
             </div>
@@ -153,7 +153,7 @@ export default function BookingPage() {
                 onChange={(event) =>
                   setFormData((current) => ({ ...current, checkIn: event.target.value }))
                 }
-                className="w-full rounded-xl border border-white/30 bg-white/95 p-3 text-slate-900"
+                className="field-3d"
                 required
               />
               <input
@@ -162,14 +162,14 @@ export default function BookingPage() {
                 onChange={(event) =>
                   setFormData((current) => ({ ...current, checkOut: event.target.value }))
                 }
-                className="w-full rounded-xl border border-white/30 bg-white/95 p-3 text-slate-900"
+                className="field-3d"
               />
             </div>
 
             <button
               type="submit"
               disabled={submitting}
-              className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#009970] to-[#0f4f84] px-6 py-4 text-base font-bold text-white shadow-lg transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-70"
+              className="button-3d-primary w-full rounded-xl px-6 py-4 text-base disabled:cursor-not-allowed disabled:opacity-70"
             >
               {submitting ? <FiLoader className="animate-spin" /> : null}
               {submitting ? 'Submitting...' : 'Confirm Booking Request'}
@@ -180,7 +180,7 @@ export default function BookingPage() {
             <p
               className={`mt-5 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium ${
                 feedback.type === 'success'
-                  ? 'bg-emerald-100 text-emerald-800'
+                  ? 'bg-red-50 text-red-700'
                   : 'bg-rose-100 text-rose-800'
               }`}
             >

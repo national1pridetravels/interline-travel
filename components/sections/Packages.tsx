@@ -59,37 +59,40 @@ export default function Packages({ packages = fallbackPackages }: PackagesProps)
   const topPackages = packages.slice(0, 4)
 
   return (
-    <section className="py-20">
+    <section className="section-space">
       <div className="section-wrap">
-        <div className="text-center mb-14">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-teal-700">
-            Best Kashmir Tour Packages
+        <div className="section-header-center mb-12">
+          <p className="chip-3d mb-4">Best Kashmir Tour Packages</p>
+          <h2 className="section-title">Trending Kashmir itineraries</h2>
+          <p className="section-copy mx-auto">
+            Top picks for families, couples, and seasonal travelers, now presented in the same
+            premium card system as the reference design.
           </p>
-          <h2 className="headline-main font-semibold mb-3">Trending Kashmir Itineraries</h2>
-          <p className="text-lg text-slate-600">Top picks for families, couples, and seasonal travelers</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {topPackages.map((pkg) => (
             <div
               key={pkg.id || pkg.slug}
-              className="overflow-hidden rounded-[28px] bg-white/85 backdrop-blur border border-white/75 shadow-[0_20px_50px_rgba(16,36,58,0.14)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_26px_55px_rgba(16,36,58,0.2)]"
+              className="surface-3d overflow-hidden rounded-[2rem] p-4"
             >
-              <div className="relative h-52">
-                <Image
-                  src={pkg.image}
-                  alt={pkg.title}
-                  fill
-                  sizes="(max-width: 1024px) 50vw, 25vw"
-                  className="object-cover"
-                />
+              <div className="image-stage">
+                <div className="image-frame-3d image-tilt-soft relative h-52 rounded-[1.6rem]">
+                  <Image
+                    src={pkg.image}
+                    alt={pkg.title}
+                    fill
+                    sizes="(max-width: 1024px) 50vw, 25vw"
+                    className="image-depth object-cover"
+                  />
 
-                <div className="absolute right-4 top-4 rounded-full bg-black/50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-white backdrop-blur-sm">
-                  Kashmir
+                  <div className="absolute right-4 top-4 rounded-full bg-slate-950/60 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-white backdrop-blur-sm">
+                    Kashmir
+                  </div>
                 </div>
               </div>
 
-              <div className="p-6">
+              <div className="relative z-10 p-2 pt-6">
                 <h3 className="text-xl font-semibold text-slate-900 mb-3">{pkg.title}</h3>
 
                 <div className="mb-6 flex items-center gap-2 text-sm text-slate-600">
@@ -98,10 +101,7 @@ export default function Packages({ packages = fallbackPackages }: PackagesProps)
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <Link
-                    href={`/packages/${pkg.slug}`}
-                    className="rounded-full bg-gradient-to-r from-emerald-500 to-teal-600 px-5 py-3 text-sm font-semibold text-white transition hover:from-emerald-600 hover:to-teal-700"
-                  >
+                  <Link href={`/packages/${pkg.slug}`} className="button-3d-primary rounded-full px-5 py-3 text-sm">
                     View Details
                   </Link>
                 </div>

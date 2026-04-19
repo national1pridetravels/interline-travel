@@ -58,10 +58,10 @@ export default async function DestinationsPage({
     : seasonFilteredDestinations
 
   return (
-    <main className="min-h-screen bg-[radial-gradient(circle_at_top,#0f3150_0%,#08223a_38%,#071a2c_100%)] py-24 text-white">
+    <main className="page-shell-dark py-24">
       <div className="section-wrap">
         <div className="mb-10">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-200">
+          <p className="chip-3d-dark mb-4">
             Destination Directory
           </p>
           <h1 className="headline-main mb-2 font-semibold text-white">
@@ -73,7 +73,7 @@ export default async function DestinationsPage({
               : `Showing ${selectedSeason.replace('-', ' ')} destinations.`}
           </p>
           {query && (
-            <p className="mt-2 text-sm text-cyan-100">Search keyword: {queryRaw}</p>
+            <p className="mt-2 text-sm text-[var(--brand-gold-soft)]">Search keyword: {queryRaw}</p>
           )}
         </div>
 
@@ -99,11 +99,11 @@ export default async function DestinationsPage({
         </div>
 
         {filteredDestinations.length === 0 && (
-          <div className="mb-8 rounded-2xl border border-white/30 bg-white/10 p-6 backdrop-blur-lg">
+          <div className="page-panel-dark mb-8 rounded-2xl p-6">
             <p className="mb-3 text-slate-100">No destinations found for this selection.</p>
             <Link
               href="/destinations"
-              className="text-sm font-semibold text-cyan-100 hover:text-white"
+              className="text-sm font-semibold text-[var(--brand-gold-soft)] hover:text-white"
             >
               View all destinations
             </Link>
@@ -115,7 +115,7 @@ export default async function DestinationsPage({
             <Link
               key={destination.slug}
               href={`/destinations/${destination.slug}`}
-              className="overflow-hidden rounded-3xl border border-white/25 bg-white/10 shadow-[0_24px_44px_rgba(2,12,26,0.45)] backdrop-blur-xl transition hover:-translate-y-1 hover:bg-white/15"
+              className="page-panel-dark overflow-hidden rounded-3xl transition hover:-translate-y-1"
             >
               <div className="relative h-52">
                 <Image
@@ -136,9 +136,9 @@ export default async function DestinationsPage({
 
               <div className="p-5">
                 <h2 className="mb-1 text-2xl font-semibold text-white">{destination.name}</h2>
-                <p className="mb-3 text-sm text-cyan-100">{destination.tagline}</p>
+                <p className="mb-3 text-sm text-[var(--brand-gold-soft)]">{destination.tagline}</p>
                 <p className="text-sm text-slate-100/90">{destination.shortDescription}</p>
-                <p className="mt-4 text-xs font-semibold uppercase tracking-[0.14em] text-emerald-200">
+                <p className="mt-4 text-xs font-semibold uppercase tracking-[0.14em] text-rose-100">
                   Best Season: {destination.bestSeason}
                 </p>
               </div>

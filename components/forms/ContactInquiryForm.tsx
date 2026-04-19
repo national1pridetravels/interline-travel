@@ -80,7 +80,7 @@ export default function ContactInquiryForm() {
           value={formData.name}
           onChange={(event) => handleChange('name', event.target.value)}
           placeholder="Full Name"
-          className="w-full rounded-xl border border-white/30 bg-white/95 p-3 text-slate-900"
+          className="field-3d"
           required
         />
         <input
@@ -88,7 +88,7 @@ export default function ContactInquiryForm() {
           value={formData.phone}
           onChange={(event) => handleChange('phone', event.target.value)}
           placeholder="Phone Number"
-          className="w-full rounded-xl border border-white/30 bg-white/95 p-3 text-slate-900"
+          className="field-3d"
           required
         />
       </div>
@@ -98,7 +98,7 @@ export default function ContactInquiryForm() {
         value={formData.email}
         onChange={(event) => handleChange('email', event.target.value)}
         placeholder="Email Address"
-        className="w-full rounded-xl border border-white/30 bg-white/95 p-3 text-slate-900"
+        className="field-3d"
         required
       />
 
@@ -107,7 +107,7 @@ export default function ContactInquiryForm() {
         value={formData.destination}
         onChange={(event) => handleChange('destination', event.target.value)}
         placeholder="Destination interest (optional)"
-        className="w-full rounded-xl border border-white/30 bg-white/95 p-3 text-slate-900"
+        className="field-3d"
       />
 
       <textarea
@@ -115,14 +115,14 @@ export default function ContactInquiryForm() {
         value={formData.message}
         onChange={(event) => handleChange('message', event.target.value)}
         placeholder="Tell us your travel plan, preferred dates, and expectations."
-        className="w-full rounded-xl border border-white/30 bg-white/95 p-3 text-slate-900"
+        className="field-3d"
         required
       />
 
       <button
         type="submit"
         disabled={submitting}
-        className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#009970] to-[#0f4f84] px-6 py-3 font-semibold text-white transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-70"
+        className="button-3d-primary w-full rounded-xl px-6 py-3 disabled:cursor-not-allowed disabled:opacity-70"
       >
         {submitting ? <FiLoader className="animate-spin" /> : null}
         {submitting ? 'Sending...' : 'Send Inquiry'}
@@ -132,7 +132,7 @@ export default function ContactInquiryForm() {
         <p
           className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium ${
             feedback.type === 'success'
-              ? 'bg-emerald-100 text-emerald-800'
+              ? 'bg-red-50 text-red-700'
               : 'bg-rose-100 text-rose-800'
           }`}
         >

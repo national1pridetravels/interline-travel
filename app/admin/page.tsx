@@ -568,7 +568,7 @@ export default function AdminPage() {
             <div
               className={`mb-4 rounded-lg px-4 py-3 text-sm ${
                 notice.type === 'success'
-                  ? 'bg-emerald-50 text-emerald-700'
+                  ? 'bg-red-50 text-red-700'
                   : 'bg-red-50 text-red-700'
               }`}
             >
@@ -582,7 +582,7 @@ export default function AdminPage() {
               <input
                 value={loginEmail}
                 onChange={(event) => setLoginEmail(event.target.value)}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none focus:ring-2 focus:ring-emerald-400"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none focus:ring-2 focus:ring-red-400"
                 type="email"
                 required
               />
@@ -592,7 +592,7 @@ export default function AdminPage() {
               <input
                 value={loginPassword}
                 onChange={(event) => setLoginPassword(event.target.value)}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none focus:ring-2 focus:ring-emerald-400"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none focus:ring-2 focus:ring-red-400"
                 type="password"
                 required
               />
@@ -644,7 +644,7 @@ export default function AdminPage() {
           <section
             className={`rounded-2xl px-5 py-4 text-sm font-medium ${
               notice.type === 'success'
-                ? 'bg-emerald-50 text-emerald-700'
+                ? 'bg-red-50 text-red-700'
                 : 'bg-red-50 text-red-700'
             }`}
           >

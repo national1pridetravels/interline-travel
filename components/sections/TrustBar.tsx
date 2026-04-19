@@ -7,18 +7,24 @@ const signals = [
 
 export default function TrustBar() {
   return (
-    <section className="section-wrap py-8">
-      <div className="rounded-3xl border border-white/70 bg-white/80 p-4 shadow-[0_16px_40px_rgba(15,35,58,0.12)] backdrop-blur-xl md:p-6">
-        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+    <section className="section-space-tight bg-[radial-gradient(circle_at_top,rgba(229,34,62,0.24),transparent_28%),linear-gradient(180deg,#111827_0%,#1f2937_100%)]">
+      <div className="section-wrap">
+        <div className="mb-10 text-center">
+          <p className="chip-3d-dark">Travel Credentials</p>
+          <h2 className="section-title-light mt-5">Built on verified support and local execution</h2>
+          <p className="section-copy-light mx-auto mt-4 max-w-3xl">
+            Every enquiry is handled by a registered Kashmir travel team with direct destination
+            planning, assistance, and response coverage.
+          </p>
+        </div>
+
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
           {signals.map((signal) => (
-            <article
-              key={signal.label}
-              className="rounded-2xl border border-slate-200 bg-gradient-to-r from-white to-slate-50 px-4 py-4"
-            >
-              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
-                {signal.label}
+            <article key={signal.label} className="surface-3d-dark rounded-[1.8rem] p-6 text-white">
+              <p className="metric-label text-rose-100/75">{signal.label}</p>
+              <p className="mt-3 text-[1.15rem] font-semibold leading-relaxed text-white">
+                {signal.value}
               </p>
-              <p className="mt-1 text-base font-semibold text-slate-900">{signal.value}</p>
             </article>
           ))}
         </div>

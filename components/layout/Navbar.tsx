@@ -3,8 +3,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
-import { FiChevronDown, FiMenu, FiSearch, FiX } from 'react-icons/fi'
+import { usePathname } from 'next/navigation'
+import { FiChevronDown, FiMenu, FiMessageCircle, FiPhoneCall, FiX } from 'react-icons/fi'
 import { destinationList, type Destination } from '@/lib/destinations'
 import SmartVideoBackground from '@/components/ui/SmartVideoBackground'
 
@@ -46,10 +46,6 @@ const fallbackNavbarDestinations: NavbarDestination[] = destinationList.map((des
   heroImage: destination.heroImage,
 }))
 
-function normalize(value: string) {
-  return value.trim().toLowerCase()
-}
-
 export default function Navbar({
   initialDestinations = fallbackNavbarDestinations,
   initialSiteConfig = defaultSiteConfig,
@@ -58,16 +54,13 @@ export default function Navbar({
   const [showDropdown, setShowDropdown] = useState(false)
   const [showMobileDestinations, setShowMobileDestinations] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [desktopSearch, setDesktopSearch] = useState('')
-  const [mobileSearch, setMobileSearch] = useState('')
-  const router = useRouter()
   const pathname = usePathname()
 
   const destinations = initialDestinations
   const siteConfig = initialSiteConfig
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 40)
+    const handleScroll = () => setScrolled(window.scrollY > 24)
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
@@ -79,9 +72,8 @@ export default function Navbar({
   }, [pathname])
 
   useEffect(() => {
-    const shouldLockScroll = isOpen || showDropdown
     const previousOverflow = document.body.style.overflow
-    if (shouldLockScroll) {
+    if (isOpen || showDropdown) {
       document.body.style.overflow = 'hidden'
     }
 
@@ -92,178 +84,214 @@ export default function Navbar({
 
   const groupedDestinations = useMemo(
     () => ({
-      mountains: destinations.filter(
-        (destination) => destination.category === 'Mountain Escapes'
-      ),
-      sacred: destinations.filter(
-        (destination) => destination.category === 'Sacred Trails'
-      ),
+      mountains: destinations.filter((destination) => destination.category === 'Mountain Escapes'),
+      sacred: destinations.filter((destination) => destination.category === 'Sacred Trails'),
+      all: destinations,
     }),
     [destinations]
   )
 
-  const destinationNames = useMemo(
-    () => destinations.map((destination) => destination.name),
-    [destinations]
-  )
-
-  const runSearch = (query: string) => {
-    const cleanQuery = query.trim()
-    if (!cleanQuery) {
-      router.push('/destinations')
-      return
-    }
-
-    const normalizedQuery = normalize(cleanQuery)
-    const exactMatch = destinations.find(
-      (destination) =>
-        normalize(destination.name) === normalizedQuery ||
-        normalize(destination.slug) === normalizedQuery
-    )
-    const fuzzyMatch = destinations.find(
-      (destination) =>
-        normalize(destination.name).includes(normalizedQuery) ||
-        normalize(destination.tagline).includes(normalizedQuery)
-    )
-
-    const match = exactMatch || fuzzyMatch
-    if (match) {
-      router.push(`/destinations/${match.slug}`)
-      return
-    }
-
-    router.push(`/destinations?query=${encodeURIComponent(cleanQuery)}`)
-  }
+  const phoneLink = siteConfig.phone.replace(/[^\d+]/g, '')
+  const whatsappLink = `https://wa.me/${phoneLink.replace('+', '')}?text=Hello%20National%20Pride%20Travels%2C%20I%20want%20to%20plan%20a%20Kashmir%20tour.`
 
   return (
     <nav
-      className={`fixed inset-x-0 top-0 z-50 border-b transition-all duration-300 ${
-        scrolled
-          ? 'border-white/20 bg-[#08182a]/80 shadow-2xl backdrop-blur-2xl'
-          : 'border-white/20 bg-[linear-gradient(145deg,rgba(7,20,36,0.8),rgba(12,35,58,0.8))] shadow-[0_20px_45px_rgba(5,15,28,0.4)] backdrop-blur-xl'
-      }`}
+      className="sticky top-0 z-50 px-2 pt-2 sm:px-3 sm:pt-3 md:px-4 md:pt-4"
+      role="navigation"
+      aria-label="Main navigation"
     >
-      <div className="mx-auto max-w-[1440px] px-4 lg:px-6">
-        <div className="flex min-h-[108px] items-center gap-4 border-b border-white/15 lg:gap-6">
-          <Link href="/" className="group flex min-w-0 items-center gap-3 lg:gap-5">
-            <div className="relative h-[90px] w-[90px] shrink-0 overflow-hidden lg:h-[112px] lg:w-[112px] xl:h-[124px] xl:w-[124px]">
-              <div className="brand-orbit absolute -inset-0.5 rounded-[32%] bg-[conic-gradient(from_90deg,_rgba(56,189,248,0.42),rgba(250,204,21,0.52),rgba(16,185,129,0.44),rgba(56,189,248,0.42))] blur-[1px]" />
-              <div className="absolute inset-[1.5px] rounded-[30%] bg-[#06192f]/92 ring-1 ring-white/32 shadow-[0_16px_30px_rgba(0,0,0,0.45)]" />
-              <div className="absolute inset-[4.5px] rounded-[28%] bg-[radial-gradient(circle_at_20%_20%,rgba(14,165,233,0.26),transparent_52%),radial-gradient(circle_at_80%_80%,rgba(250,204,21,0.22),transparent_55%),#041223]" />
-              <Image
-                src="/images/logo.png"
-                alt={siteConfig.brandName}
-                fill
-                sizes="(max-width: 1024px) 90px, (max-width: 1280px) 112px, 124px"
-                className="relative z-10 scale-[1.14] object-contain p-0.5 drop-shadow-[0_16px_24px_rgba(0,0,0,0.5)]"
-                priority
-              />
-            </div>
-
-            <div className="hidden min-w-0 max-w-[40vw] sm:block lg:max-w-[31vw] 2xl:max-w-none">
-              <p className="truncate font-[family:var(--font-brand-display)] text-[clamp(1.35rem,1.95vw,2.45rem)] font-semibold leading-[0.98] tracking-[0.028em] text-transparent [background-image:linear-gradient(112deg,#ffe3a1_4%,#f2c75f_42%,#ddab3d_74%,#ffe2a6_98%)] bg-clip-text [text-shadow:0_6px_20px_rgba(0,0,0,0.4)] transition duration-500 group-hover:brightness-110">
-                {siteConfig.brandName}
-              </p>
-              <p className="mt-1 font-[family:var(--font-brand-accent)] text-[9px] font-semibold uppercase tracking-[0.26em] text-[#d4e5fb] sm:text-[10px] lg:text-[11px]">
-                {siteConfig.brandTagline}
-              </p>
-            </div>
-          </Link>
-
-          <form
-            onSubmit={(event) => {
-              event.preventDefault()
-              runSearch(desktopSearch)
-            }}
-            className="hidden min-w-[250px] flex-1 items-center gap-2 rounded-full border border-white/35 bg-white/95 p-1.5 shadow-[0_16px_32px_rgba(9,27,43,0.15)] lg:flex xl:min-w-[340px]"
-          >
-            <FiSearch className="ml-2 text-slate-500" />
-            <input
-              type="text"
-              list="navbar-destination-options"
-              value={desktopSearch}
-              onChange={(event) => setDesktopSearch(event.target.value)}
-              placeholder="Search all Kashmir destinations"
-              className="w-full bg-transparent py-2 pl-1 pr-2 text-[15px] text-slate-900 placeholder:text-slate-500 focus:outline-none"
-            />
-            <button
-              type="submit"
-              className="rounded-full bg-gradient-to-r from-[#02996f] to-[#1166a1] px-5 py-2 text-base font-semibold text-white transition hover:brightness-105"
-            >
-              Search
-            </button>
-          </form>
-
-          <datalist id="navbar-destination-options">
-            {destinationNames.map((name) => (
-              <option key={name} value={name} />
-            ))}
-          </datalist>
-
-          <a
-            href={`tel:${siteConfig.phone.replace(/[^\d+]/g, '')}`}
-            className="hidden shrink-0 xl:inline-flex rounded-full bg-gradient-to-r from-[#d8e25a] to-[#b9d544] px-6 py-3.5 text-[17px] font-bold text-slate-900 shadow-lg transition hover:brightness-95"
-          >
-            {siteConfig.phone}
-          </a>
-
-          <button
-            onClick={() => setIsOpen((value) => !value)}
-            className="ml-auto rounded-lg p-2 text-white lg:hidden"
-            aria-label={isOpen ? 'Close menu' : 'Open menu'}
-          >
-            {isOpen ? <FiX size={26} /> : <FiMenu size={26} />}
-          </button>
-        </div>
-
-        <div className="hidden h-[72px] items-center justify-center gap-10 lg:flex">
-          <button
-            onClick={() => setShowDropdown((value) => !value)}
-            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-500 to-teal-600 px-8 py-3 text-[17px] font-semibold text-white shadow-lg"
-          >
-            Popular Destination
-            <FiChevronDown
-              size={18}
-              className={`transition-transform duration-300 ${showDropdown ? 'rotate-180' : ''}`}
-            />
-          </button>
-
-          {navItems.map((item) => (
+      <div className="relative mx-auto max-w-7xl">
+        <div
+          className={`nav-shell px-3 sm:px-6 lg:px-8 ${
+            scrolled ? 'shadow-[0_24px_80px_rgba(15,23,42,0.14)]' : ''
+          }`}
+        >
+          <div className="flex min-h-[76px] items-center justify-between gap-3 sm:min-h-[82px] lg:min-h-[92px]">
             <Link
-              key={item.href}
-              href={item.href}
-              className="text-[18px] font-semibold text-white transition hover:text-[#f2cf64]"
+              href="/"
+              className="group flex min-w-0 flex-1 items-center gap-2.5 sm:gap-4 md:gap-5 lg:max-w-[430px]"
+              aria-label={`${siteConfig.brandName} home`}
             >
-              {item.label}
+              <div className="relative h-[60px] w-[60px] shrink-0 overflow-hidden rounded-[1.35rem] bg-[#111827] ring-1 ring-rose-100 shadow-[0_20px_42px_rgba(17,24,39,0.18)] sm:h-[72px] sm:w-[72px] sm:rounded-[1.5rem] lg:h-[84px] lg:w-[84px] lg:rounded-[1.6rem]">
+                <div className="brand-orbit absolute inset-0 rounded-[1.6rem] bg-[conic-gradient(from_90deg,_rgba(229,34,62,0.5),rgba(255,255,255,0.34),rgba(248,113,113,0.42),rgba(229,34,62,0.5))] opacity-85 blur-[1px]" />
+                <div className="absolute inset-[2px] rounded-[1.2rem] bg-[#111827] sm:rounded-[1.35rem] lg:rounded-[1.45rem]" />
+                <Image
+                  src="/images/logo-mark.png"
+                  alt={siteConfig.brandName}
+                  fill
+                  sizes="(max-width: 640px) 60px, (max-width: 1024px) 72px, 84px"
+                  className="relative z-10 scale-[1.04] object-contain p-1.5 sm:p-2"
+                  priority
+                />
+              </div>
+
+              <div className="min-w-0 flex-1">
+                <p className="brand-wordmark font-[family:var(--font-brand-display)] text-[0.94rem] font-semibold leading-[0.88] tracking-[0.01em] sm:text-[1.3rem] lg:text-[2rem]">
+                  <span className="block min-[430px]:inline">National Pride</span>{' '}
+                  <span className="block min-[430px]:inline">Travels</span>
+                </p>
+                <p className="mt-1 hidden truncate font-[family:var(--font-brand-accent)] text-[8px] font-semibold uppercase tracking-[0.24em] text-slate-500 min-[390px]:block sm:mt-1.5 sm:text-[9px] lg:mt-2 lg:text-[11px]">
+                  {siteConfig.brandTagline}
+                </p>
+              </div>
             </Link>
-          ))}
+
+            <div className="hidden items-center gap-1 xl:flex 2xl:gap-2">
+              <button
+                onClick={() => setShowDropdown((value) => !value)}
+                className={`flex items-center gap-1 rounded-xl px-3 py-2 text-[0.94rem] font-semibold tracking-[0.01em] transition-colors xl:px-4 ${
+                  showDropdown
+                    ? 'bg-red-50 text-red-600 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]'
+                    : 'text-slate-700 hover:bg-red-50 hover:text-red-600'
+                }`}
+                aria-expanded={showDropdown}
+                aria-haspopup="true"
+              >
+                Popular Destination
+                <FiChevronDown
+                  size={17}
+                  className={`transition-transform duration-300 ${showDropdown ? 'rotate-180' : ''}`}
+                />
+              </button>
+
+              {navItems.map((item) => {
+                const active =
+                  pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href))
+
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`rounded-xl px-3 py-2 text-[0.94rem] font-semibold tracking-[0.01em] transition-colors xl:px-4 ${
+                      active
+                        ? 'bg-red-50 text-red-600 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]'
+                        : 'text-slate-700 hover:bg-red-50 hover:text-red-600'
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                )
+              })}
+            </div>
+
+            <a
+              href={`tel:${phoneLink}`}
+              className="hidden shrink-0 items-center gap-2 rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white shadow-[0_18px_34px_rgba(17,24,39,0.18)] 2xl:inline-flex"
+            >
+              <FiPhoneCall className="text-[15px]" />
+              {siteConfig.phone}
+            </a>
+
+            <button
+              onClick={() => setIsOpen((value) => !value)}
+              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white/90 text-slate-900 shadow-[0_12px_24px_rgba(15,23,42,0.08)] xl:hidden"
+              aria-label={isOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={isOpen}
+              aria-controls="mobile-menu"
+            >
+              {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+            </button>
+          </div>
+
+          {isOpen ? (
+            <div
+              id="mobile-menu"
+              className="border-t border-slate-200/80 px-1 pb-4 pt-4 xl:hidden"
+            >
+              <div className="mb-4 grid grid-cols-2 gap-3">
+                <a
+                  href={`tel:${phoneLink}`}
+                  className="button-3d-secondary min-h-[52px] rounded-2xl text-sm"
+                >
+                  <FiPhoneCall className="text-base" />
+                  Call Now
+                </a>
+                <a
+                  href={whatsappLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="button-3d-primary min-h-[52px] rounded-2xl text-sm"
+                >
+                  <FiMessageCircle className="text-base" />
+                  WhatsApp
+                </a>
+              </div>
+
+              <button
+                onClick={() => setShowMobileDestinations((value) => !value)}
+                className="button-3d-primary mb-3 w-full justify-between rounded-2xl px-5 py-4"
+              >
+                Popular Destination
+                <FiChevronDown
+                  className={`transition-transform duration-300 ${
+                    showMobileDestinations ? 'rotate-180' : ''
+                  }`}
+                />
+              </button>
+
+              {showMobileDestinations ? (
+                <div className="mb-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
+                  {groupedDestinations.all.map((destination) => (
+                    <Link
+                      key={destination.slug}
+                      href={`/destinations/${destination.slug}`}
+                      onClick={() => setIsOpen(false)}
+                      className="surface-3d rounded-2xl p-3"
+                    >
+                      <p className="text-sm font-semibold text-slate-900">{destination.name}</p>
+                      <p className="mt-1 text-[11px] uppercase tracking-[0.14em] text-[var(--brand-teal)]">
+                        {destination.bestSeason}
+                      </p>
+                    </Link>
+                  ))}
+                </div>
+              ) : null}
+
+              <div className="space-y-2">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setIsOpen(false)}
+                    className="surface-3d block rounded-2xl px-4 py-3.5 text-base font-semibold text-slate-900"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+
+              <div className="mt-4 rounded-2xl border border-red-100 bg-red-50/70 px-4 py-3 text-center text-sm font-semibold text-red-700">
+                {siteConfig.phone}
+              </div>
+            </div>
+          ) : null}
         </div>
-      </div>
 
-      {showDropdown && (
-        <>
-          <button
-            type="button"
-            aria-label="Close destination panel"
-            className="fixed inset-0 top-[176px] z-[54] bg-[#051120]/45 backdrop-blur-[2px]"
-            onClick={() => setShowDropdown(false)}
-          />
+        {showDropdown ? (
+          <>
+            <button
+              type="button"
+              aria-label="Close destination panel"
+              className="fixed inset-0 z-40 bg-slate-950/20 backdrop-blur-[2px]"
+              onClick={() => setShowDropdown(false)}
+            />
 
-          <div className="fixed inset-x-0 top-[176px] z-[55] max-h-[calc(100vh-190px)] overflow-y-auto border-t border-slate-200 bg-white/98 shadow-2xl">
-            <div className="mx-auto max-w-[1440px] px-6 py-7">
+            <div className="dropdown-3d absolute left-0 right-0 top-[calc(100%+1rem)] z-50 rounded-[2rem] p-5 lg:p-7">
               <div className="mb-6 grid gap-5 xl:grid-cols-[1.4fr_1fr]">
-                <div className="rounded-3xl border border-slate-200 bg-gradient-to-r from-slate-900 via-[#0f3e63] to-[#157568] p-6 text-white">
-                  <p className="mb-2 text-xs uppercase tracking-[0.16em] text-cyan-100/90">
+                <div className="surface-3d-dark rounded-[2rem] p-6 text-white">
+                  <p className="text-xs uppercase tracking-[0.18em] text-rose-100/90">
                     Popular Destination Collection
                   </p>
-                  <h3 className="mb-2 text-3xl font-semibold">Explore Every Route With Detail</h3>
-                  <p className="max-w-3xl text-sm text-slate-100/90">
-                    All destinations are searchable and available with season guidance, route tips,
-                    and complete planning support.
+                  <h3 className="mt-3 text-3xl font-semibold text-white">
+                    Kashmir routes arranged like a premium catalog
+                  </h3>
+                  <p className="mt-3 max-w-3xl text-sm text-slate-200">
+                    Searchable destinations, season guidance, and quick route previews for valley
+                    stays, meadows, pilgrimage travel, and offbeat circuits.
                   </p>
                 </div>
 
-                <div className="overflow-hidden rounded-3xl border border-slate-200 bg-slate-900">
+                <div className="surface-3d-dark overflow-hidden rounded-[2rem] p-0 text-white">
                   <div className="relative h-40 w-full">
                     <SmartVideoBackground
                       src="/assets/media/hero-legacy.mp4"
@@ -274,16 +302,18 @@ export default function Navbar({
                       className="h-full w-full object-cover"
                     />
                   </div>
-                  <div className="p-4 text-white">
-                    <p className="text-xs uppercase tracking-[0.16em] text-cyan-100/85">Aerial Preview</p>
+                  <div className="p-4">
+                    <p className="text-xs uppercase tracking-[0.16em] text-rose-100/85">
+                      Aerial Preview
+                    </p>
                     <p className="mt-1 text-sm text-slate-100">
-                      Valley, lake, and mountain destinations in one premium collection.
+                      Lakes, meadows, glaciers, and shrine routes in one visual panel.
                     </p>
                   </div>
                 </div>
               </div>
 
-              <div className="grid gap-5 xl:grid-cols-2">
+              <div className="grid gap-6 xl:grid-cols-2">
                 <section>
                   <h4 className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
                     Mountain Escapes
@@ -294,21 +324,21 @@ export default function Navbar({
                         key={destination.slug}
                         href={`/destinations/${destination.slug}`}
                         onClick={() => setShowDropdown(false)}
-                        className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_10px_24px_rgba(15,35,58,0.1)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_28px_rgba(15,35,58,0.16)]"
+                        className="surface-3d overflow-hidden rounded-[1.5rem] p-0"
                       >
-                        <div className="relative h-24">
+                        <div className="relative h-28">
                           <Image
                             src={destination.heroImage}
                             alt={destination.name}
                             fill
-                            sizes="220px"
+                            sizes="280px"
                             className="object-cover"
                           />
                         </div>
-                        <div className="p-3">
+                        <div className="p-4">
                           <p className="text-sm font-semibold text-slate-900">{destination.name}</p>
                           <p className="mt-1 text-xs text-slate-600">{destination.tagline}</p>
-                          <p className="mt-2 text-[11px] uppercase tracking-[0.14em] text-teal-700">
+                          <p className="mt-2 text-[11px] uppercase tracking-[0.14em] text-[var(--brand-teal)]">
                             {destination.bestSeason}
                           </p>
                         </div>
@@ -327,21 +357,21 @@ export default function Navbar({
                         key={destination.slug}
                         href={`/destinations/${destination.slug}`}
                         onClick={() => setShowDropdown(false)}
-                        className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_10px_24px_rgba(15,35,58,0.1)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_28px_rgba(15,35,58,0.16)]"
+                        className="surface-3d overflow-hidden rounded-[1.5rem] p-0"
                       >
-                        <div className="relative h-24">
+                        <div className="relative h-28">
                           <Image
                             src={destination.heroImage}
                             alt={destination.name}
                             fill
-                            sizes="220px"
+                            sizes="280px"
                             className="object-cover"
                           />
                         </div>
-                        <div className="p-3">
+                        <div className="p-4">
                           <p className="text-sm font-semibold text-slate-900">{destination.name}</p>
                           <p className="mt-1 text-xs text-slate-600">{destination.tagline}</p>
-                          <p className="mt-2 text-[11px] uppercase tracking-[0.14em] text-teal-700">
+                          <p className="mt-2 text-[11px] uppercase tracking-[0.14em] text-[var(--brand-teal)]">
                             {destination.bestSeason}
                           </p>
                         </div>
@@ -351,75 +381,9 @@ export default function Navbar({
                 </section>
               </div>
             </div>
-          </div>
-        </>
-      )}
-
-      {isOpen && (
-        <div className="max-h-[calc(100vh-104px)] overflow-y-auto border-t border-white/10 bg-[#061220]/96 px-5 py-4 backdrop-blur-xl lg:hidden">
-          <form
-            onSubmit={(event) => {
-              event.preventDefault()
-              runSearch(mobileSearch)
-              setIsOpen(false)
-            }}
-            className="relative mb-4 flex items-center gap-2"
-          >
-            <FiSearch className="absolute left-3 text-slate-400" />
-            <input
-              type="text"
-              list="navbar-destination-options"
-              value={mobileSearch}
-              onChange={(event) => setMobileSearch(event.target.value)}
-              placeholder="Search all destinations"
-              className="w-full rounded-full bg-white py-3 pl-10 pr-4 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-400"
-            />
-          </form>
-
-          <button
-            onClick={() => setShowMobileDestinations((value) => !value)}
-            className="mb-3 w-full rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 px-4 py-3 text-left text-base font-semibold text-white"
-          >
-            Popular Destination
-          </button>
-
-          {showMobileDestinations && (
-            <div className="mb-4 grid grid-cols-2 gap-2">
-              {destinations.map((destination) => (
-                <Link
-                  key={destination.slug}
-                  href={`/destinations/${destination.slug}`}
-                  onClick={() => setIsOpen(false)}
-                  className="rounded-lg border border-white/15 bg-white/10 p-3 text-[15px] text-white"
-                >
-                  <p className="font-semibold">{destination.name}</p>
-                  <p className="mt-1 text-[11px] text-cyan-100/85">{destination.bestSeason}</p>
-                </Link>
-              ))}
-            </div>
-          )}
-
-          <div className="space-y-2">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setIsOpen(false)}
-                className="block rounded-lg px-3 py-2.5 text-lg font-semibold text-white/95 hover:bg-white/10"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
-
-          <a
-            href={`tel:${siteConfig.phone.replace(/[^\d+]/g, '')}`}
-            className="mt-4 block rounded-full bg-gradient-to-r from-[#d8e25a] to-[#b9d544] px-5 py-3 text-center text-base font-bold text-slate-900"
-          >
-            {siteConfig.phone}
-          </a>
-        </div>
-      )}
+          </>
+        ) : null}
+      </div>
     </nav>
   )
 }

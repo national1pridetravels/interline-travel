@@ -9,50 +9,57 @@ type PopularDestinationsProps = {
 export default function PopularDestinations({
   items = featuredDestinations,
 }: PopularDestinationsProps) {
-
   return (
-    <section className="py-20">
+    <section className="section-space">
       <div className="section-wrap">
-        <div className="text-center mb-14">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-teal-700">
-            Kashmir Tour and Travel Destinations
-          </p>
-          <h2 className="headline-main font-semibold mb-3">Popular Destinations</h2>
-          <p className="text-lg text-slate-600">
-            Beautiful locations with curated plans, smooth transfers, and premium stays.
+        <div className="section-header-center mb-12">
+          <p className="chip-3d mb-4">Kashmir Tour and Travel Destinations</p>
+          <h2 className="section-title">Popular destinations with route-ready planning</h2>
+          <p className="section-copy mx-auto">
+            The same premium presentation, but using your Kashmir destinations, local knowledge,
+            and package content without changing any travel details.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
-          {items.map((dest) => (
+        <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+          {items.map((dest, index) => (
             <Link
               key={dest.slug}
               href={`/destinations/${dest.slug}`}
-              className="group relative overflow-hidden rounded-[30px] border border-white/75 shadow-[0_22px_60px_rgba(19,45,62,0.18)]"
+              className="surface-3d group rounded-[2rem] p-4"
             >
-              <div className="relative h-[420px]">
-                <Image
-                  src={dest.heroImage}
-                  alt={dest.name}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-transparent" />
+              <div className="image-stage">
+                <div
+                  className={`image-frame-3d relative h-[20rem] rounded-[1.7rem] ${
+                    index % 2 === 0 ? 'image-tilt-right' : 'image-tilt-left'
+                  }`}
+                >
+                  <Image
+                    src={dest.heroImage}
+                    alt={dest.name}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="image-depth object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/15 to-transparent" />
+                  <div className="absolute left-4 top-4">
+                    <span className="chip-3d-dark">{dest.category}</span>
+                  </div>
+                  <div className="absolute bottom-4 left-4 right-4 text-white">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-rose-100/85">
+                      {dest.bestSeason}
+                    </p>
+                    <h3 className="mt-2 text-3xl font-semibold text-white">{dest.name}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-200">
+                      {dest.shortDescription}
+                    </p>
+                  </div>
+                </div>
               </div>
 
-              <div className="absolute inset-x-0 bottom-0 p-6 text-white">
-                <div className="mb-3 flex items-center justify-between text-xs uppercase tracking-[0.18em] text-slate-100/90">
-                  <span className="rounded-full bg-white/20 px-3 py-1 backdrop-blur-sm">{dest.category}</span>
-                  <span>{dest.bestSeason}</span>
-                </div>
-                <h3 className="text-3xl font-semibold mb-2">{dest.name}</h3>
-                <p className="text-sm text-slate-100/90 leading-relaxed">
-                  {dest.shortDescription}
-                </p>
-                <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-cyan-100/90">
-                  Explore {dest.name} Kashmir tour package
-                </p>
+              <div className="relative z-10 mt-5 flex items-center justify-between gap-4 px-2">
+                <p className="text-sm text-slate-600">{dest.tagline}</p>
+                <span className="text-sm font-semibold text-[var(--brand-teal)]">Explore</span>
               </div>
             </Link>
           ))}

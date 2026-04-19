@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { FiClock, FiExternalLink, FiMail, FiMapPin, FiMessageCircle, FiPhone } from 'react-icons/fi'
 import { FaFacebookF, FaGoogle, FaInstagram } from 'react-icons/fa'
@@ -22,40 +23,59 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[#111b2d] text-white pt-16 pb-8">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid md:grid-cols-4 gap-10 mb-12">
-          <div>
-            <div className="mb-4">
-              <p className="font-[family:var(--font-brand-accent)] text-[10px] font-semibold uppercase tracking-[0.42em] text-[#e4edf9]">
-                National Pride
-              </p>
-              <h3 className="font-[family:var(--font-display)] text-4xl font-semibold uppercase leading-[0.96] tracking-[0.08em] text-transparent [background-image:linear-gradient(112deg,#ffe8b8_6%,#f2c563_42%,#d9a33f_74%,#ffe7b7_98%)] bg-clip-text">
-                Travels
-              </h3>
-              <p className="mt-1 font-[family:var(--font-brand-accent)] text-[10px] font-medium uppercase tracking-[0.27em] text-cyan-100/90">
-                Time To Travel With Us
-              </p>
+    <footer className="relative overflow-hidden bg-gradient-to-b from-[#111827] via-[#1f2937] to-black text-white">
+      <div className="pointer-events-none absolute inset-0 opacity-20" aria-hidden="true">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              'linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px)',
+            backgroundSize: '48px 48px',
+            maskImage: 'linear-gradient(180deg, rgba(0,0,0,0.9), transparent)',
+          }}
+        />
+      </div>
+
+      <div className="section-wrap relative z-10 py-10 md:py-12">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:gap-6 xl:grid-cols-4">
+          <div className="surface-3d-dark rounded-[1.7rem] p-5 sm:col-span-2 xl:col-span-1">
+            <div className="mb-4 flex items-center gap-3 text-left">
+              <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-[1.25rem] border border-white/12 bg-[#111827] shadow-[0_16px_30px_rgba(15,23,42,0.22)]">
+                <Image
+                  src="/images/logo-mark.png"
+                  alt="National Pride Travels logo"
+                  fill
+                  sizes="64px"
+                  className="object-contain p-1.5"
+                />
+              </div>
+              <div className="min-w-0">
+                <h3 className="brand-wordmark-dark font-[family:var(--font-brand-display)] text-[1.5rem] font-semibold leading-[0.92] tracking-[0.02em] sm:text-3xl">
+                National Pride Travels
+                </h3>
+                <p className="mt-1 font-[family:var(--font-brand-accent)] text-[9px] font-medium uppercase tracking-[0.22em] text-rose-100/90 sm:text-[10px] sm:tracking-[0.27em]">
+                  Time To Travel With Us
+                </p>
+              </div>
             </div>
-            <p className="text-gray-300 text-sm mb-4 leading-relaxed">
+            <p className="card-copy-sm text-slate-300">
               National Pride Tour and Travel is a registered concern with the Directorate of
               Tourism, Government of Jammu and Kashmir, India.
             </p>
-            <p className="text-xs text-cyan-100/85 mb-6">
+            <p className="mt-4 text-xs text-rose-100/85">
               Department of Tourism Reg No: JKAE00005259
               <br />
               GSTN: 01AOZPH8135A1Z4A
             </p>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="mt-5 grid grid-cols-1 gap-3 min-[420px]:grid-cols-2">
               {socialLinks.map(({ label, href, icon: Icon }) => (
                 <a
                   key={label}
                   href={href}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-3 py-2 text-xs font-semibold text-white transition hover:bg-white/20"
-                  aria-label={label}
+                  className="inline-flex items-center gap-2 rounded-xl border border-white/14 bg-white/8 px-3 py-2 text-xs font-semibold text-white transition hover:bg-white/16"
                 >
                   <Icon size={15} />
                   <span>{label}</span>
@@ -64,39 +84,73 @@ export default function Footer() {
             </div>
           </div>
 
-          <div>
-            <h4 className="mb-4 font-[family:var(--font-brand-accent)] text-lg font-semibold uppercase tracking-[0.18em] text-amber-100">
-              Quick Links
-            </h4>
-            <ul className="space-y-2 text-sm text-gray-400">
-              <li><Link href="/about" className="hover:text-white transition">About Us</Link></li>
-              <li><Link href="/packages" className="hover:text-white transition">Kashmir Packages</Link></li>
-              <li><Link href="/services" className="hover:text-white transition">Services</Link></li>
-              <li><Link href="/packages?type=family" className="hover:text-white transition">Family Trips</Link></li>
-              <li><Link href="/blog" className="hover:text-white transition">Blog</Link></li>
+          <div className="surface-3d-dark rounded-[1.7rem] p-5">
+            <h4 className="footer-heading">Quick Links</h4>
+            <ul className="footer-link-list text-slate-300">
+              <li>
+                <Link href="/about" className="hover:text-white">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link href="/packages" className="hover:text-white">
+                  Kashmir Packages
+                </Link>
+              </li>
+              <li>
+                <Link href="/services" className="hover:text-white">
+                  Services
+                </Link>
+              </li>
+              <li>
+                <Link href="/packages?type=family" className="hover:text-white">
+                  Family Trips
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="hover:text-white">
+                  Contact
+                </Link>
+              </li>
             </ul>
           </div>
 
-          <div>
-            <h4 className="mb-4 font-[family:var(--font-brand-accent)] text-lg font-semibold uppercase tracking-[0.18em] text-amber-100">
-              Popular Destinations
-            </h4>
-            <ul className="space-y-2 text-sm text-gray-400">
-              <li><Link href="/destinations/srinagar" className="hover:text-white transition">Srinagar</Link></li>
-              <li><Link href="/destinations/gulmarg" className="hover:text-white transition">Gulmarg</Link></li>
-              <li><Link href="/destinations/pahalgam" className="hover:text-white transition">Pahalgam</Link></li>
-              <li><Link href="/destinations/sonmarg" className="hover:text-white transition">Sonmarg</Link></li>
-              <li><Link href="/destinations/gurez" className="hover:text-white transition">Gurez Valley</Link></li>
+          <div className="surface-3d-dark rounded-[1.7rem] p-5">
+            <h4 className="footer-heading">Popular Destinations</h4>
+            <ul className="footer-link-list text-slate-300">
+              <li>
+                <Link href="/destinations/srinagar" className="hover:text-white">
+                  Srinagar
+                </Link>
+              </li>
+              <li>
+                <Link href="/destinations/gulmarg" className="hover:text-white">
+                  Gulmarg
+                </Link>
+              </li>
+              <li>
+                <Link href="/destinations/pahalgam" className="hover:text-white">
+                  Pahalgam
+                </Link>
+              </li>
+              <li>
+                <Link href="/destinations/sonmarg" className="hover:text-white">
+                  Sonmarg
+                </Link>
+              </li>
+              <li>
+                <Link href="/destinations/gurez" className="hover:text-white">
+                  Gurez Valley
+                </Link>
+              </li>
             </ul>
           </div>
 
-          <div>
-            <h4 className="mb-4 font-[family:var(--font-brand-accent)] text-lg font-semibold uppercase tracking-[0.18em] text-amber-100">
-              Contact Us
-            </h4>
-            <div className="space-y-4 text-sm text-gray-400">
-              <div className="flex items-start gap-3">
-                <FiMapPin className="text-yellow-400 mt-1" size={16} />
+          <div className="surface-3d-dark rounded-[1.7rem] p-5 sm:col-span-2 xl:col-span-1">
+            <h4 className="footer-heading">Contact Us</h4>
+            <div className="space-y-4 text-sm text-slate-300">
+              <div className="flex items-start gap-2">
+                <FiMapPin className="mt-1 text-[var(--brand-gold)]" size={16} />
                 <div>
                   <p className="font-semibold text-white">Office Address</p>
                   <p>MACHOWA BAGHI MEHTAB</p>
@@ -106,15 +160,15 @@ export default function Footer() {
                     href="https://maps.google.com/?q=MACHOWA+BAGHI+MEHTAB+SRINAGAR+JAMMU+AND+KASHMIR+INDIA+190015"
                     target="_blank"
                     rel="noreferrer"
-                    className="mt-2 inline-flex items-center gap-1 text-cyan-200 hover:text-cyan-100"
+                    className="mt-2 inline-flex items-center gap-1 text-rose-200 hover:text-rose-100"
                   >
                     Open Location <FiExternalLink size={13} />
                   </a>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3">
-                <FiPhone className="text-yellow-400 mt-1" size={16} />
+              <div className="flex items-start gap-2">
+                <FiPhone className="mt-1 text-[var(--brand-gold)]" size={16} />
                 <div>
                   <p className="font-semibold text-white">Call Us</p>
                   <a href="tel:+919906469903" className="hover:text-white">
@@ -123,34 +177,33 @@ export default function Footer() {
                   <p className="mt-1 flex items-center gap-2">
                     <FiMessageCircle size={14} />
                     <a
-                      href="#whatsapp-chat"
+                      href="https://wa.me/919906469903?text=Hello%20National%20Pride%20Travels%2C%20I%20want%20to%20plan%20a%20Kashmir%20tour."
+                      target="_blank"
+                      rel="noreferrer"
                       className="hover:text-white"
                     >
-                      WhatsApp Chatbot
+                      Open WhatsApp
                     </a>
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3">
-                <FiMail className="text-yellow-400 mt-1" size={16} />
+              <div className="flex items-start gap-2">
+                <FiMail className="mt-1 text-[var(--brand-gold)]" size={16} />
                 <div>
                   <p className="font-semibold text-white">Email Us</p>
                   <a href="mailto:info@nationalpridetravels.com" className="hover:text-white">
                     info@nationalpridetravels.com
                   </a>
                   <br />
-                  <a
-                    href="mailto:nationalpridetravels@gmail.com"
-                    className="hover:text-white"
-                  >
+                  <a href="mailto:nationalpridetravels@gmail.com" className="hover:text-white">
                     nationalpridetravels@gmail.com
                   </a>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3">
-                <FiClock className="text-yellow-400 mt-1" size={16} />
+              <div className="flex items-start gap-2">
+                <FiClock className="mt-1 text-[var(--brand-gold)]" size={16} />
                 <div>
                   <p className="font-semibold text-white">Open Time</p>
                   <p>Mon - Sun (9:00 AM - 7:00 PM)</p>
@@ -160,12 +213,22 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-gray-700 pt-8 flex flex-col md:flex-row items-center justify-between text-sm text-gray-400">
-          <p>© 2026 National Pride Travels. All rights reserved.</p>
-          <div className="flex gap-6 mt-4 md:mt-0">
-            <Link href="/privacy-policy" className="hover:text-white transition">Privacy Policy</Link>
-            <Link href="/terms-and-conditions" className="hover:text-white transition">Terms & Conditions</Link>
-            <Link href="/cancellation-policy" className="hover:text-white transition">Cancellation Policy</Link>
+        <div className="surface-3d-dark mt-6 rounded-[1.7rem] px-5 py-4">
+          <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+            <p className="card-copy-sm text-center text-slate-300 md:text-left">
+              © 2026 National Pride Travels. All rights reserved.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-center text-sm text-slate-300">
+              <Link href="/privacy-policy" className="hover:text-white">
+                Privacy Policy
+              </Link>
+              <Link href="/terms-and-conditions" className="hover:text-white">
+                Terms & Conditions
+              </Link>
+              <Link href="/cancellation-policy" className="hover:text-white">
+                Cancellation Policy
+              </Link>
+            </div>
           </div>
         </div>
       </div>

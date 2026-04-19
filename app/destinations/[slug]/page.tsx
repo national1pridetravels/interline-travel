@@ -79,7 +79,7 @@ export default async function DestinationDetailPage({
   const destination = (await getDestinationBySlug(params.slug)) || getFallbackDestination(params.slug)
 
   return (
-    <main className="min-h-screen bg-[#eef4f7] py-24">
+    <main className="page-shell-dark py-24">
       <div className="section-wrap">
         <section className="relative overflow-hidden rounded-[34px] shadow-[0_30px_70px_rgba(12,28,44,0.22)]">
           <div className="relative h-[480px]">
@@ -95,10 +95,12 @@ export default async function DestinationDetailPage({
           </div>
 
           <div className="absolute inset-x-0 bottom-0 p-8 md:p-10 text-white">
-            <p className="mb-2 text-xs uppercase tracking-[0.2em] text-cyan-100/90">
+            <p className="mb-2 text-xs uppercase tracking-[0.2em] text-[var(--brand-gold-soft)]">
               {destination.category}
             </p>
-            <h1 className="mb-3 text-4xl md:text-6xl font-semibold">{destination.name}</h1>
+            <h1 className="mb-3 text-3xl sm:text-4xl md:text-6xl font-semibold">
+              {destination.name}
+            </h1>
             <p className="max-w-3xl text-sm md:text-lg text-slate-100">{destination.tagline}</p>
           </div>
         </section>
@@ -153,7 +155,7 @@ export default async function DestinationDetailPage({
                 />
               </div>
               <div className="p-5">
-                <p className="text-xs uppercase tracking-[0.16em] text-teal-700 mb-2">
+                <p className="text-xs uppercase tracking-[0.16em] text-red-700 mb-2">
                   Cinematic Preview
                 </p>
                 <p className="text-sm text-slate-700">
@@ -176,13 +178,13 @@ export default async function DestinationDetailPage({
             <div className="flex flex-wrap gap-3">
               <Link
                 href="/packages"
-                className="inline-flex rounded-full bg-gradient-to-r from-emerald-500 to-teal-600 px-6 py-3 text-sm font-semibold text-white hover:from-emerald-600 hover:to-teal-700"
+                className="button-3d-primary rounded-full px-6 py-3 text-sm"
               >
                 View Packages
               </Link>
               <Link
                 href="/contact"
-                className="inline-flex rounded-full border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-900 hover:bg-slate-100"
+                className="button-3d-secondary rounded-full px-6 py-3 text-sm"
               >
                 Plan This Destination
               </Link>
